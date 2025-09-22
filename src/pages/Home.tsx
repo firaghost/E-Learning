@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Card from '../components/Card';
+import CuteModelCanvas from '../components/CuteModel';
 import logo from '../Logo.png'; // Import your custom logo
 
 const Home: React.FC = () => {
@@ -41,15 +42,8 @@ const Home: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
       {/* Hero Section */}
       <div className="relative min-h-screen flex items-center overflow-hidden">
-        {/* Background elements */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-ethiopia-green/10 to-ethiopia-yellow/10 dark:from-ethiopia-green/20 dark:to-ethiopia-yellow/20"></div>
-          
-          {/* Floating shapes */}
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-ethiopia-green/10 blur-3xl"></div>
-          <div className="absolute bottom-1/3 right-1/4 w-72 h-72 rounded-full bg-ethiopia-yellow/10 blur-3xl"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-ethiopia-red/5 blur-3xl"></div>
-        </div>
+        {/* Simplified background */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800"></div>
         
         {/* Main content */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -138,65 +132,16 @@ const Home: React.FC = () => {
               </motion.div>
             </motion.div>
             
-            {/* Glass card */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative"
-            >
-              <div className="backdrop-blur-xl bg-white/30 dark:bg-gray-800/30 rounded-3xl border border-white/50 dark:border-gray-700/50 shadow-2xl p-8">
-                <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-ethiopia-yellow/20 blur-2xl"></div>
-                <div className="absolute -bottom-6 -left-6 w-32 h-32 rounded-full bg-ethiopia-green/20 blur-2xl"></div>
-                
-                <div className="relative z-10">
-                  <div className="flex justify-between items-start mb-6">
-                    <div>
-                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Featured Course</h3>
-                      <p className="text-gray-600 dark:text-gray-400">Amharic Language Basics</p>
-                    </div>
-                    <div className="bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow text-white text-sm font-bold px-3 py-1 rounded-full">
-                      FREE
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="flex items-center">
-                      <div className="flex -space-x-2">
-                        <img className="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-                        <img className="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-                      </div>
-                      <span className="ml-2 text-gray-600 dark:text-gray-400 text-sm">1.2k enrolled</span>
-                    </div>
-                    
-                    <div className="flex items-center text-ethiopia-yellow">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                      <span className="ml-1 text-gray-900 dark:text-white font-medium">4.9</span>
-                    </div>
-                  </div>
-                  
-                  <div className="mb-6">
-                    <p className="text-gray-600 dark:text-gray-400">
-                      Learn the basics of Amharic, the official language of Ethiopia. This course is completely free and open to all learners.
-                    </p>
-                  </div>
-                  
-                  <div className="flex justify-between items-center">
-                   
-                    
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="px-6 py-3 bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 w-full"
-                    >
-                      Start Learning for Free
-                    </motion.button>
-                  </div>
+            {/* 3D Model Section */}
+            <div className="relative flex justify-center items-center h-96 lg:h-[500px]">
+              <div className="w-full h-full rounded-2xl overflow-hidden shadow-2xl relative">
+                {/* Background gradient for the 3D model container */}
+                <div className="absolute inset-0 bg-gradient-to-br from-ethiopia-green/10 via-ethiopia-yellow/5 to-ethiopia-red/10"></div>
+                <div className="w-full h-full">
+                  <CuteModelCanvas />
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>
