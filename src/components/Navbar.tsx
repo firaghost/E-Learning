@@ -67,7 +67,7 @@ const Navbar: React.FC = () => {
   const navItems = getNavItems();
 
   return (
-    <nav className="backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-b border-white/20 dark:border-gray-700/30 shadow-lg">
+    <nav className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20">
           <div className="flex">
@@ -78,11 +78,11 @@ const Navbar: React.FC = () => {
               >
                 <Link to={isAuthenticated ? "/dashboard" : "/"} className="flex items-center group">
                   <div className="relative">
-                    <img src={logo} className="h-10 w-10 rounded-lg shadow-lg group-hover:shadow-xl transition-all duration-300" alt="E-Learning Platform Logo" />
-                    <div className="absolute inset-0 rounded-lg bg-gradient-to-tr from-ethiopia-green/20 to-ethiopia-yellow/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <img src={logo} className="h-12 w-12 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300" alt="E-Learning Platform Logo" />
+                    <div className="absolute inset-0 rounded-xl bg-gradient-to-tr from-ethiopia-green to-ethiopia-yellow opacity-20"></div>
                   </div>
                   <div className="ml-3">
-                    <span className="text-xl font-bold bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow bg-clip-text text-transparent">
+                    <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow">
                       GrowNet
                     </span>
                   </div>
@@ -91,7 +91,7 @@ const Navbar: React.FC = () => {
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8 sm:items-center">
               {navItems.map((item) => (
-                <motion.div key={item.path} whileHover={{ y: -2, scale: 1.05 }}>
+                <motion.div key={item.path} whileHover={{ y: -2 }}>
                   <Link
                     to={item.path}
                     className="relative px-4 py-3 text-gray-700 dark:text-gray-300 hover:text-ethiopia-green dark:hover:text-ethiopia-yellow font-medium transition-all duration-300 group flex items-center"
@@ -146,7 +146,7 @@ const Navbar: React.FC = () => {
               </div>
             ) : (
               <div className="flex items-center space-x-3 ml-4">
-                <motion.div whileHover={{ y: -2, scale: 1.05 }}>
+                <motion.div whileHover={{ y: -2 }}>
                   <Link
                     to="/login"
                     className="px-4 py-2 text-ethiopia-green dark:text-ethiopia-yellow hover:text-ethiopia-yellow dark:hover:text-ethiopia-green font-medium transition-all duration-300 rounded-lg hover:bg-ethiopia-green/10 dark:hover:bg-ethiopia-yellow/10"

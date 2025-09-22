@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { createResource } from '../services/resourceService';
 import { Resource } from '../types/Resource';
+import Button from '../components/Button';
 
 const CreateResource: React.FC = () => {
   const navigate = useNavigate();
@@ -180,24 +181,26 @@ const CreateResource: React.FC = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <motion.button
+              <Button
+                variant="secondary"
                 type="button"
                 onClick={() => navigate('/education')}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex-1 px-6 py-3 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                className="flex-1"
               >
                 Cancel
-              </motion.button>
-              <motion.button
+              </Button>
+              <Button
+                variant="primary"
                 type="submit"
                 disabled={loading}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex-1 px-6 py-3 bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1"
               >
                 {loading ? 'Creating...' : 'Create Resource'}
-              </motion.button>
+              </Button>
             </div>
           </form>
         </motion.div>

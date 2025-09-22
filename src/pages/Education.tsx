@@ -7,6 +7,7 @@ import Filters from '../components/Filters';
 import { useAuth } from '../context/AuthContext';
 import { getAllResources } from '../services/resourceService';
 import { Resource } from '../types/Resource';
+import Button from '../components/Button';
 
 const Education: React.FC = () => {
   const { isAuthenticated } = useAuth();
@@ -106,17 +107,14 @@ const Education: React.FC = () => {
             </div>
             {isAuthenticated && (
               <div className="flex-shrink-0">
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Link
-                    to="/education/create"
-                    className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                  >
+                <Link to="/education/create">
+                  <Button variant="primary">
                     <svg className="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
                     </svg>
                     Add Resource
-                  </Link>
-                </motion.div>
+                  </Button>
+                </Link>
               </div>
             )}
           </div>
@@ -274,24 +272,23 @@ const Education: React.FC = () => {
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex-1">
-                    <a
-                      href={selectedResource.content_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block w-full text-center bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow text-white font-medium py-3 px-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                    >
+                  <a
+                    href={selectedResource.content_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1"
+                  >
+                    <Button variant="primary" className="w-full">
                       Access Free Resource
-                    </a>
-                  </motion.div>
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex-1">
-                    <button
-                      onClick={closeModal}
-                      className="block w-full text-center bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-medium py-3 px-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-600"
-                    >
-                      Close
-                    </button>
-                  </motion.div>
+                    </Button>
+                  </a>
+                  <Button
+                    variant="secondary"
+                    className="flex-1"
+                    onClick={closeModal}
+                  >
+                    Close
+                  </Button>
                 </div>
               </div>
             </motion.div>

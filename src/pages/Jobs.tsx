@@ -7,6 +7,7 @@ import Filters from '../components/Filters';
 import { useAuth } from '../context/AuthContext';
 import { getAllJobs } from '../services/jobService';
 import { Job } from '../types/Job';
+import Button from '../components/Button';
 
 const Jobs: React.FC = () => {
   const { isAuthenticated } = useAuth();
@@ -297,21 +298,19 @@ const Jobs: React.FC = () => {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex-1 px-6 py-3 bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-center"
+                <Button
+                  variant="primary"
+                  className="flex-1"
                 >
                   Apply for Free
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                </Button>
+                <Button
+                  variant="secondary"
+                  className="flex-1"
                   onClick={closeModal}
-                  className="flex-1 px-6 py-3 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-center"
                 >
                   Close
-                </motion.button>
+                </Button>
               </div>
               
               <div className="mt-4 text-center">

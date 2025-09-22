@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
 import logo from '../Logo.png';
+import Button from '../components/Button';
 
 const Register: React.FC = () => {
   const [name, setName] = useState('');
@@ -146,12 +147,10 @@ const Register: React.FC = () => {
             </div>
 
             <div>
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+              <Button
                 type="submit"
                 disabled={loading}
-                className="w-full flex justify-center py-3 px-4 bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50"
+                className="w-full flex justify-center"
               >
                 {loading ? (
                   <div className="flex items-center">
@@ -159,7 +158,7 @@ const Register: React.FC = () => {
                     Creating account...
                   </div>
                 ) : 'Create account'}
-              </motion.button>
+              </Button>
             </div>
           </form>
           
