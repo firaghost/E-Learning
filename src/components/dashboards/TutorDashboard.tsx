@@ -32,6 +32,36 @@ const TutorDashboard: React.FC = () => {
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
+  // Function to handle session actions
+  const handleJoinSession = (sessionId: number) => {
+    alert(`Joining session ID: ${sessionId}`);
+    // In a real app, this would navigate to the session or open a video call
+  };
+
+  // Function to schedule a new session
+  const handleScheduleSession = () => {
+    alert('Opening session scheduling interface');
+    // In a real app, this would open a scheduling modal or navigate to scheduling page
+  };
+
+  // Function to update profile
+  const handleUpdateProfile = () => {
+    alert('Navigating to profile update page');
+    // In a real app, this would navigate to the profile update page
+  };
+
+  // Function to view earnings
+  const handleViewEarnings = () => {
+    alert('Opening earnings report');
+    // In a real app, this would open an earnings report or navigate to payments page
+  };
+
+  // Function to update availability
+  const handleUpdateAvailability = () => {
+    alert('Opening availability settings');
+    // In a real app, this would open availability settings
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
@@ -164,7 +194,10 @@ const TutorDashboard: React.FC = () => {
             >
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white">Upcoming Sessions</h2>
-                <button className="text-ethiopia-green hover:text-ethiopia-yellow font-medium">
+                <button 
+                  onClick={handleScheduleSession}
+                  className="text-ethiopia-green hover:text-ethiopia-yellow font-medium"
+                >
                   Schedule New
                 </button>
               </div>
@@ -183,7 +216,12 @@ const TutorDashboard: React.FC = () => {
                     </div>
                     <div className="text-right">
                       <p className="text-sm font-medium text-gray-900 dark:text-white">{session.time}</p>
-                      <button className="text-xs text-ethiopia-green hover:text-ethiopia-yellow">Join Session</button>
+                      <button 
+                        onClick={() => handleJoinSession(session.id)}
+                        className="text-xs text-ethiopia-green hover:text-ethiopia-yellow"
+                      >
+                        Join Session
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -269,15 +307,24 @@ const TutorDashboard: React.FC = () => {
             >
               <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Quick Actions</h3>
               <div className="space-y-3">
-                <button className="w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                <button 
+                  onClick={handleScheduleSession}
+                  className="w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                >
                   <div className="font-medium text-gray-900 dark:text-white">Schedule Session</div>
                   <div className="text-sm text-gray-500 dark:text-gray-400">Book a new tutoring session</div>
                 </button>
-                <button className="w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                <button 
+                  onClick={handleUpdateProfile}
+                  className="w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                >
                   <div className="font-medium text-gray-900 dark:text-white">Update Profile</div>
                   <div className="text-sm text-gray-500 dark:text-gray-400">Edit your tutoring profile</div>
                 </button>
-                <button className="w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                <button 
+                  onClick={handleViewEarnings}
+                  className="w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                >
                   <div className="font-medium text-gray-900 dark:text-white">View Earnings</div>
                   <div className="text-sm text-gray-500 dark:text-gray-400">Check payment history</div>
                 </button>
@@ -299,7 +346,10 @@ const TutorDashboard: React.FC = () => {
                   <span className="text-sm font-medium text-green-600">Online</span>
                 </div>
               </div>
-              <button className="w-full mt-4 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 py-2 px-4 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+              <button 
+                onClick={handleUpdateAvailability}
+                className="w-full mt-4 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 py-2 px-4 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+              >
                 Update Availability
               </button>
             </motion.div>

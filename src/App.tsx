@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -11,6 +12,9 @@ import Education from './pages/Education';
 import Jobs from './pages/Jobs';
 import Tutoring from './pages/Tutoring';
 import Dashboard from './pages/Dashboard';
+import CreateResource from './pages/CreateResource';
+import CreateJob from './pages/CreateJob';
+import CreateTutor from './pages/CreateTutor';
 
 function App() {
   return (
@@ -27,7 +31,26 @@ function App() {
                 <Route path="/education" element={<Education />} />
                 <Route path="/jobs" element={<Jobs />} />
                 <Route path="/tutoring" element={<Tutoring />} />
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/dashboard" element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                } />
+                <Route path="/education/create" element={
+                  <ProtectedRoute>
+                    <CreateResource />
+                  </ProtectedRoute>
+                } />
+                <Route path="/jobs/create" element={
+                  <ProtectedRoute>
+                    <CreateJob />
+                  </ProtectedRoute>
+                } />
+                <Route path="/tutoring/create" element={
+                  <ProtectedRoute>
+                    <CreateTutor />
+                  </ProtectedRoute>
+                } />
               </Routes>
             </main>
             <Footer />

@@ -1,47 +1,77 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
 
 const Footer: React.FC = () => {
+  const { user, isAuthenticated } = useAuth();
+
+  // Define footer items based on user role
+  const getFooterItems = () => {
+    const baseItems = [
+      { name: 'Home', path: '/' },
+      { name: 'Education', path: '/education' },
+      { name: 'Jobs', path: '/jobs' },
+      { name: 'Tutoring', path: '/tutoring' },
+      { name: 'Contact', path: '/contact' }
+    ];
+
+    if (!isAuthenticated) {
+      return baseItems;
+    }
+
+    // Role-specific footer items
+    switch (user?.role) {
+      case 'student':
+        return [
+          { name: 'Dashboard', path: '/dashboard' },
+          { name: 'My Courses', path: '/education' },
+          { name: 'Job Board', path: '/jobs' },
+          { name: 'Find Tutors', path: '/tutoring' },
+          { name: 'Contact', path: '/contact' }
+        ];
+      case 'tutor':
+        return [
+          { name: 'Dashboard', path: '/dashboard' },
+          { name: 'My Sessions', path: '/tutoring' },
+          { name: 'Resources', path: '/education' },
+          { name: 'Contact', path: '/contact' }
+        ];
+      case 'employer':
+        return [
+          { name: 'Dashboard', path: '/dashboard' },
+          { name: 'My Jobs', path: '/jobs' },
+          { name: 'Post Job', path: '/jobs/create' },
+          { name: 'Contact', path: '/contact' }
+        ];
+      case 'admin':
+        return [
+          { name: 'Dashboard', path: '/dashboard' },
+          { name: 'Education', path: '/education' },
+          { name: 'Jobs', path: '/jobs' },
+          { name: 'Tutoring', path: '/tutoring' },
+          { name: 'Contact', path: '/contact' }
+        ];
+      default:
+        return baseItems;
+    }
+  };
+
+  const footerItems = getFooterItems();
+
   return (
     <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
       <div className="max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
         <nav className="-mx-5 -my-2 flex flex-wrap justify-center" aria-label="Footer">
-          <div className="px-5 py-2">
-            <motion.div whileHover={{ y: -2 }}>
-              <Link to="/" className="text-base text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
-                Home
-              </Link>
-            </motion.div>
-          </div>
-          <div className="px-5 py-2">
-            <motion.div whileHover={{ y: -2 }}>
-              <Link to="/education" className="text-base text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
-                Education
-              </Link>
-            </motion.div>
-          </div>
-          <div className="px-5 py-2">
-            <motion.div whileHover={{ y: -2 }}>
-              <Link to="/jobs" className="text-base text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
-                Jobs
-              </Link>
-            </motion.div>
-          </div>
-          <div className="px-5 py-2">
-            <motion.div whileHover={{ y: -2 }}>
-              <Link to="/tutoring" className="text-base text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
-                Tutoring
-              </Link>
-            </motion.div>
-          </div>
-          <div className="px-5 py-2">
-            <motion.div whileHover={{ y: -2 }}>
-              <Link to="/contact" className="text-base text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
-                Contact
-              </Link>
-            </motion.div>
-          </div>
+          {footerItems.map((item) => (
+            <div key={item.path} className="px-5 py-2">
+              <motion.div whileHover={{ y: -2 }}>
+                <Link to={item.path} className="text-base text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                  {item.name}
+                </Link>
+              </motion.div>
+            </div>
+          ))}
         </nav>
         <div className="mt-8 flex justify-center space-x-6">
           <motion.a

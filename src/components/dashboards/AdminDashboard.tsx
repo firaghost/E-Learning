@@ -52,30 +52,72 @@ const AdminDashboard: React.FC = () => {
   }, []);
 
   const handleDeleteJob = async (id: string) => {
-    try {
-      await deleteJob(id);
-      setJobs(jobs.filter(job => job.id !== id));
-    } catch (error) {
-      console.error('Error deleting job:', error);
+    if (window.confirm('Are you sure you want to delete this job?')) {
+      try {
+        await deleteJob(id);
+        setJobs(jobs.filter(job => job.id !== id));
+      } catch (error) {
+        console.error('Error deleting job:', error);
+        alert('Failed to delete job');
+      }
     }
   };
 
   const handleDeleteResource = async (id: string) => {
-    try {
-      await deleteResource(id);
-      setResources(resources.filter(resource => resource.id !== id));
-    } catch (error) {
-      console.error('Error deleting resource:', error);
+    if (window.confirm('Are you sure you want to delete this resource?')) {
+      try {
+        await deleteResource(id);
+        setResources(resources.filter(resource => resource.id !== id));
+      } catch (error) {
+        console.error('Error deleting resource:', error);
+        alert('Failed to delete resource');
+      }
     }
   };
 
   const handleDeleteTutor = async (id: string) => {
-    try {
-      await deleteTutor(id);
-      setTutors(tutors.filter(tutor => tutor.id !== id));
-    } catch (error) {
-      console.error('Error deleting tutor:', error);
+    if (window.confirm('Are you sure you want to delete this tutor?')) {
+      try {
+        await deleteTutor(id);
+        setTutors(tutors.filter(tutor => tutor.id !== id));
+      } catch (error) {
+        console.error('Error deleting tutor:', error);
+        alert('Failed to delete tutor');
+      }
     }
+  };
+
+  // Function to handle viewing all jobs
+  const handleViewAllJobs = () => {
+    setActiveTab('jobs');
+  };
+
+  // Function to handle viewing all resources
+  const handleViewAllResources = () => {
+    setActiveTab('resources');
+  };
+
+  // Function to handle viewing all tutors
+  const handleViewAllTutors = () => {
+    setActiveTab('tutors');
+  };
+
+  // Function to handle adding a new job
+  const handleAddNewJob = () => {
+    alert('Navigating to job creation page');
+    // In a real app, this would navigate to the job creation page
+  };
+
+  // Function to handle adding a new resource
+  const handleAddNewResource = () => {
+    alert('Navigating to resource creation page');
+    // In a real app, this would navigate to the resource creation page
+  };
+
+  // Function to handle adding a new tutor
+  const handleAddNewTutor = () => {
+    alert('Navigating to tutor creation page');
+    // In a real app, this would navigate to the tutor creation page
   };
 
   if (loading) {
@@ -202,20 +244,158 @@ const AdminDashboard: React.FC = () => {
         >
           <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Quick Actions</h3>
           <div className="space-y-3">
-            <Link to="/jobs/create" className="block w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+            <button 
+              onClick={handleAddNewJob}
+              className="block w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+            >
               <div className="font-medium text-gray-900 dark:text-white">Add New Job</div>
               <div className="text-sm text-gray-500 dark:text-gray-400">Create a new job posting</div>
-            </Link>
-            <Link to="/education/create" className="block w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+            </button>
+            <button 
+              onClick={handleAddNewResource}
+              className="block w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+            >
               <div className="font-medium text-gray-900 dark:text-white">Add Resource</div>
               <div className="text-sm text-gray-500 dark:text-gray-400">Upload learning material</div>
-            </Link>
-            <Link to="/tutoring/create" className="block w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+            </button>
+            <button 
+              onClick={handleAddNewTutor}
+              className="block w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+            >
               <div className="font-medium text-gray-900 dark:text-white">Add Tutor</div>
               <div className="text-sm text-gray-500 dark:text-gray-400">Register new tutor</div>
-            </Link>
+            </button>
           </div>
         </motion.div>
+      </div>
+    </div>
+  );
+
+  const renderJobs = () => (
+    <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
+      <div className="flex justify-between items-center mb-6">
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white">Job Management</h3>
+        <button 
+          onClick={handleAddNewJob}
+          className="bg-ethiopia-green text-white px-4 py-2 rounded-lg hover:bg-ethiopia-yellow transition-colors"
+        >
+          Add New Job
+        </button>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+          <thead className="bg-gray-50 dark:bg-gray-700">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Title</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Company</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Location</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+            {jobs.map((job) => (
+              <tr key={job.id}>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{job.title}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{job.company}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{job.location}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <button 
+                    onClick={() => handleDeleteJob(job.id)}
+                    className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+
+  const renderResources = () => (
+    <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
+      <div className="flex justify-between items-center mb-6">
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white">Resource Management</h3>
+        <button 
+          onClick={handleAddNewResource}
+          className="bg-ethiopia-green text-white px-4 py-2 rounded-lg hover:bg-ethiopia-yellow transition-colors"
+        >
+          Add New Resource
+        </button>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+          <thead className="bg-gray-50 dark:bg-gray-700">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Title</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Category</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Created By</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+            {resources.map((resource) => (
+              <tr key={resource.id}>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{resource.title}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{resource.category}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{resource.created_by}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <button 
+                    onClick={() => handleDeleteResource(resource.id)}
+                    className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+
+  const renderTutors = () => (
+    <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
+      <div className="flex justify-between items-center mb-6">
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white">Tutor Management</h3>
+        <button 
+          onClick={handleAddNewTutor}
+          className="bg-ethiopia-green text-white px-4 py-2 rounded-lg hover:bg-ethiopia-yellow transition-colors"
+        >
+          Add New Tutor
+        </button>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+          <thead className="bg-gray-50 dark:bg-gray-700">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Name</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Subject</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Level</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+            {tutors.map((tutor) => (
+              <tr key={tutor.id}>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{tutor.name}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{tutor.subject}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{tutor.level}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <button 
+                    onClick={() => handleDeleteTutor(tutor.id)}
+                    className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
@@ -300,33 +480,9 @@ const AdminDashboard: React.FC = () => {
           transition={{ duration: 0.5 }}
         >
           {activeTab === 'overview' && renderOverview()}
-          {activeTab === 'jobs' && (
-            <div className="text-center py-12">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-white">Job Management</h3>
-              <p className="mt-2 text-gray-500 dark:text-gray-400">Manage all job postings on the platform.</p>
-              <Link to="/jobs" className="mt-4 inline-block bg-ethiopia-green text-white px-6 py-2 rounded-lg hover:bg-ethiopia-yellow transition-colors">
-                View All Jobs
-              </Link>
-            </div>
-          )}
-          {activeTab === 'resources' && (
-            <div className="text-center py-12">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-white">Resource Management</h3>
-              <p className="mt-2 text-gray-500 dark:text-gray-400">Manage all learning resources and materials.</p>
-              <Link to="/education" className="mt-4 inline-block bg-ethiopia-green text-white px-6 py-2 rounded-lg hover:bg-ethiopia-yellow transition-colors">
-                View All Resources
-              </Link>
-            </div>
-          )}
-          {activeTab === 'tutors' && (
-            <div className="text-center py-12">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-white">Tutor Management</h3>
-              <p className="mt-2 text-gray-500 dark:text-gray-400">Manage all tutors and their profiles.</p>
-              <Link to="/tutoring" className="mt-4 inline-block bg-ethiopia-green text-white px-6 py-2 rounded-lg hover:bg-ethiopia-yellow transition-colors">
-                View All Tutors
-              </Link>
-            </div>
-          )}
+          {activeTab === 'jobs' && renderJobs()}
+          {activeTab === 'resources' && renderResources()}
+          {activeTab === 'tutors' && renderTutors()}
         </motion.div>
       </div>
     </div>

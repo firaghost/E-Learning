@@ -40,6 +40,36 @@ const EmployerDashboard: React.FC = () => {
     fetchJobs();
   }, []);
 
+  // Function to handle viewing job applications
+  const handleViewApplications = (jobId: string) => {
+    alert(`Viewing applications for job ID: ${jobId}`);
+    // In a real app, this would navigate to the applications page for this job
+  };
+
+  // Function to handle reviewing an application
+  const handleReviewApplication = (applicationId: number) => {
+    alert(`Reviewing application ID: ${applicationId}`);
+    // In a real app, this would open the application details
+  };
+
+  // Function to post a new job
+  const handlePostNewJob = () => {
+    alert('Navigating to job posting page');
+    // In a real app, this would navigate to the job creation page
+  };
+
+  // Function to review all applications
+  const handleReviewAllApplications = () => {
+    alert('Opening applications review interface');
+    // In a real app, this would navigate to the applications review page
+  };
+
+  // Function to update company profile
+  const handleUpdateCompanyProfile = () => {
+    alert('Opening company profile update interface');
+    // In a real app, this would navigate to the company profile page
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
@@ -173,9 +203,12 @@ const EmployerDashboard: React.FC = () => {
             >
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white">My Job Postings</h2>
-                <Link to="/jobs/create" className="bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow text-white px-4 py-2 rounded-lg font-medium hover:shadow-lg transition-all">
+                <button 
+                  onClick={handlePostNewJob}
+                  className="bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow text-white px-4 py-2 rounded-lg font-medium hover:shadow-lg transition-all"
+                >
                   Post New Job
-                </Link>
+                </button>
               </div>
               
               <div className="space-y-4">
@@ -197,7 +230,10 @@ const EmployerDashboard: React.FC = () => {
                         <span className="text-sm font-medium text-gray-900 dark:text-white">
                           {Math.floor(Math.random() * 20) + 5} applications
                         </span>
-                        <button className="text-ethiopia-green hover:text-ethiopia-yellow text-sm">
+                        <button 
+                          onClick={() => handleViewApplications(job.id)}
+                          className="text-ethiopia-green hover:text-ethiopia-yellow text-sm"
+                        >
                           View
                         </button>
                       </div>
@@ -245,7 +281,10 @@ const EmployerDashboard: React.FC = () => {
                         }`}>
                           {application.status}
                         </span>
-                        <button className="text-ethiopia-green hover:text-ethiopia-yellow text-sm">
+                        <button 
+                          onClick={() => handleReviewApplication(application.id)}
+                          className="text-ethiopia-green hover:text-ethiopia-yellow text-sm"
+                        >
                           Review
                         </button>
                       </div>
@@ -292,15 +331,24 @@ const EmployerDashboard: React.FC = () => {
             >
               <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Quick Actions</h3>
               <div className="space-y-3">
-                <Link to="/jobs/create" className="block w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                <button 
+                  onClick={handlePostNewJob}
+                  className="w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                >
                   <div className="font-medium text-gray-900 dark:text-white">Post New Job</div>
                   <div className="text-sm text-gray-500 dark:text-gray-400">Create a new job posting</div>
-                </Link>
-                <button className="w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                </button>
+                <button 
+                  onClick={handleReviewAllApplications}
+                  className="w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                >
                   <div className="font-medium text-gray-900 dark:text-white">Review Applications</div>
                   <div className="text-sm text-gray-500 dark:text-gray-400">Check pending applications</div>
                 </button>
-                <button className="w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                <button 
+                  onClick={handleUpdateCompanyProfile}
+                  className="w-full text-left p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                >
                   <div className="font-medium text-gray-900 dark:text-white">Company Profile</div>
                   <div className="text-sm text-gray-500 dark:text-gray-400">Update company information</div>
                 </button>

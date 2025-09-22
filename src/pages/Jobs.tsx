@@ -4,10 +4,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Card from '../components/Card';
 import SearchBar from '../components/SearchBar';
 import Filters from '../components/Filters';
+import { useAuth } from '../context/AuthContext';
 import { getAllJobs } from '../services/jobService';
 import { Job } from '../types/Job';
 
 const Jobs: React.FC = () => {
+  const { isAuthenticated } = useAuth();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
   const [searchQuery, setSearchQuery] = useState('');

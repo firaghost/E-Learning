@@ -15,6 +15,57 @@ const Navbar: React.FC = () => {
     navigate('/login');
   };
 
+  // Define navigation items based on user role
+  const getNavItems = () => {
+    const baseItems = [
+      { name: 'Dashboard', path: '/dashboard' },
+      { name: 'Education', path: '/education' },
+      { name: 'Jobs', path: '/jobs' },
+      { name: 'Tutoring', path: '/tutoring' }
+    ];
+
+    if (!isAuthenticated) {
+      return [
+        { name: 'Home', path: '/' },
+        { name: 'Education', path: '/education' },
+        { name: 'Jobs', path: '/jobs' },
+        { name: 'Tutoring', path: '/tutoring' }
+      ];
+    }
+
+    // Role-specific navigation items
+    switch (user?.role) {
+      case 'student':
+        return baseItems;
+      case 'tutor':
+        return [
+          { name: 'Dashboard', path: '/dashboard' },
+          { name: 'My Sessions', path: '/tutoring' },
+          { name: 'Resources', path: '/education' }
+        ];
+      case 'employer':
+        return [
+          { name: 'Dashboard', path: '/dashboard' },
+          { name: 'My Jobs', path: '/jobs' },
+          { name: 'Post Job', path: '/jobs/create' }
+        ];
+      case 'admin':
+        return [
+          { name: 'Dashboard', path: '/dashboard' },
+          { name: 'Education', path: '/education' },
+          { name: 'Jobs', path: '/jobs' },
+          { name: 'Tutoring', path: '/tutoring' },
+          { name: 'Create Resource', path: '/education/create' },
+          { name: 'Create Job', path: '/jobs/create' },
+          { name: 'Create Tutor', path: '/tutoring/create' }
+        ];
+      default:
+        return baseItems;
+    }
+  };
+
+  const navItems = getNavItems();
+
   return (
     <nav className="backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-b border-white/20 dark:border-gray-700/30 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -34,93 +85,22 @@ const Navbar: React.FC = () => {
                     <span className="text-xl font-bold bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow bg-clip-text text-transparent">
                       GrowNet
                     </span>
-                    
                   </div>
                 </Link>
               </motion.div>
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8 sm:items-center">
-              {isAuthenticated ? (
-                // Authenticated Navigation
-                <>
-                  <motion.div whileHover={{ y: -2, scale: 1.05 }}>
-                    <Link
-                      to="/dashboard"
-                      className="relative px-4 py-3 text-gray-700 dark:text-gray-300 hover:text-ethiopia-green dark:hover:text-ethiopia-yellow font-medium transition-all duration-300 group flex items-center"
-                    >
-                      Dashboard
-                      <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow group-hover:w-full transition-all duration-300"></div>
-                    </Link>
-                  </motion.div>
-                  <motion.div whileHover={{ y: -2, scale: 1.05 }}>
-                    <Link
-                      to="/education"
-                      className="relative px-4 py-3 text-gray-700 dark:text-gray-300 hover:text-ethiopia-green dark:hover:text-ethiopia-yellow font-medium transition-all duration-300 group flex items-center"
-                    >
-                      Education
-                      <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow group-hover:w-full transition-all duration-300"></div>
-                    </Link>
-                  </motion.div>
-                  <motion.div whileHover={{ y: -2, scale: 1.05 }}>
-                    <Link
-                      to="/jobs"
-                      className="relative px-4 py-3 text-gray-700 dark:text-gray-300 hover:text-ethiopia-green dark:hover:text-ethiopia-yellow font-medium transition-all duration-300 group flex items-center"
-                    >
-                      Jobs
-                      <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow group-hover:w-full transition-all duration-300"></div>
-                    </Link>
-                  </motion.div>
-                  <motion.div whileHover={{ y: -2, scale: 1.05 }}>
-                    <Link
-                      to="/tutoring"
-                      className="relative px-4 py-3 text-gray-700 dark:text-gray-300 hover:text-ethiopia-green dark:hover:text-ethiopia-yellow font-medium transition-all duration-300 group flex items-center"
-                    >
-                      Tutoring
-                      <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow group-hover:w-full transition-all duration-300"></div>
-                    </Link>
-                  </motion.div>
-                </>
-              ) : (
-                // Public Navigation
-                <>
-                  <motion.div whileHover={{ y: -2, scale: 1.05 }}>
-                    <Link
-                      to="/"
-                      className="relative px-4 py-3 text-gray-700 dark:text-gray-300 hover:text-ethiopia-green dark:hover:text-ethiopia-yellow font-medium transition-all duration-300 group flex items-center"
-                    >
-                      Home
-                      <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow group-hover:w-full transition-all duration-300"></div>
-                    </Link>
-                  </motion.div>
-                  <motion.div whileHover={{ y: -2, scale: 1.05 }}>
-                    <Link
-                      to="/education"
-                      className="relative px-4 py-3 text-gray-700 dark:text-gray-300 hover:text-ethiopia-green dark:hover:text-ethiopia-yellow font-medium transition-all duration-300 group flex items-center"
-                    >
-                      Education
-                      <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow group-hover:w-full transition-all duration-300"></div>
-                    </Link>
-                  </motion.div>
-                  <motion.div whileHover={{ y: -2, scale: 1.05 }}>
-                    <Link
-                      to="/jobs"
-                      className="relative px-4 py-3 text-gray-700 dark:text-gray-300 hover:text-ethiopia-green dark:hover:text-ethiopia-yellow font-medium transition-all duration-300 group flex items-center"
-                    >
-                      Jobs
-                      <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow group-hover:w-full transition-all duration-300"></div>
-                    </Link>
-                  </motion.div>
-                  <motion.div whileHover={{ y: -2, scale: 1.05 }}>
-                    <Link
-                      to="/tutoring"
-                      className="relative px-4 py-3 text-gray-700 dark:text-gray-300 hover:text-ethiopia-green dark:hover:text-ethiopia-yellow font-medium transition-all duration-300 group flex items-center"
-                    >
-                      Tutoring
-                      <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow group-hover:w-full transition-all duration-300"></div>
-                    </Link>
-                  </motion.div>
-                </>
-              )}
+              {navItems.map((item) => (
+                <motion.div key={item.path} whileHover={{ y: -2, scale: 1.05 }}>
+                  <Link
+                    to={item.path}
+                    className="relative px-4 py-3 text-gray-700 dark:text-gray-300 hover:text-ethiopia-green dark:hover:text-ethiopia-yellow font-medium transition-all duration-300 group flex items-center"
+                  >
+                    {item.name}
+                    <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow group-hover:w-full transition-all duration-300"></div>
+                  </Link>
+                </motion.div>
+              ))}
             </div>
           </div>
           <div className="hidden sm:ml-6 sm:flex sm:items-center">

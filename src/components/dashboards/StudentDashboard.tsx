@@ -43,6 +43,18 @@ const StudentDashboard: React.FC = () => {
     fetchData();
   }, []);
 
+  // Function to handle course enrollment
+  const handleEnrollCourse = (resourceId: string) => {
+    alert(`Enrolled in course with ID: ${resourceId}`);
+    // In a real app, this would make an API call to enroll the student
+  };
+
+  // Function to handle booking a tutor session
+  const handleBookTutor = (tutorId: string) => {
+    alert(`Booked session with tutor ID: ${tutorId}`);
+    // In a real app, this would open a booking modal or navigate to booking page
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
@@ -193,9 +205,12 @@ const StudentDashboard: React.FC = () => {
                       </div>
                     </div>
                     <div className="ml-4">
-                      <span className="text-xs text-gray-500 dark:text-gray-400">
-                        {Math.floor(Math.random() * 100)}% Complete
-                      </span>
+                      <button 
+                        onClick={() => handleEnrollCourse(resource.id)}
+                        className="text-xs bg-ethiopia-green text-white px-3 py-1 rounded-lg hover:bg-ethiopia-yellow transition-colors"
+                      >
+                        Enroll
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -225,6 +240,12 @@ const StudentDashboard: React.FC = () => {
                     <h3 className="font-medium text-gray-900 dark:text-white">{tutor.name}</h3>
                     <p className="text-sm text-gray-500 dark:text-gray-400">{tutor.subject}</p>
                     <p className="text-xs text-ethiopia-green mt-1">{tutor.level}</p>
+                    <button 
+                      onClick={() => handleBookTutor(tutor.id)}
+                      className="mt-3 w-full text-xs bg-ethiopia-green text-white px-3 py-1 rounded-lg hover:bg-ethiopia-yellow transition-colors"
+                    >
+                      Book Session
+                    </button>
                   </div>
                 ))}
               </div>
