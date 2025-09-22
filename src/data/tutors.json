@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "name": "Abebe Kebede",
+    "subject": "Mathematics",
+    "description": "Experienced math tutor specializing in calculus and algebra for Ethiopian students.",
+    "level": "High School to University",
+    "contact_info": "abebe.kebede@example.com",
+    "created_by": "2",
+    "created_at": "2025-01-01T00:00:00Z"
+  },
+  {
+    "id": "2",
+    "name": "Mekdes Haile",
+    "subject": "Amharic Language",
+    "description": "Native Amharic speaker offering language tutoring for foreigners and beginners.",
+    "level": "Beginner to Advanced",
+    "contact_info": "mekdes.haile@example.com",
+    "created_by": "2",
+    "created_at": "2025-01-02T00:00:00Z"
+  },
+  {
+    "id": "3",
+    "name": "Solomon Tesfaye",
+    "subject": "Ethiopian History",
+    "description": "History professor specializing in Ethiopian ancient and modern history.",
+    "level": "High School to University",
+    "contact_info": "solomon.tesfaye@example.com",
+    "created_by": "2",
+    "created_at": "2025-01-03T00:00:00Z"
+  }
+]

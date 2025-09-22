@@ -1,0 +1,29 @@
+[
+  {
+    "id": "1",
+    "title": "Amharic Language Basics",
+    "category": "Language Learning",
+    "description": "Learn the basics of Amharic, the official language of Ethiopia.",
+    "content_url": "https://example.com/amharic-basics",
+    "created_by": "2",
+    "created_at": "2025-01-01T00:00:00Z"
+  },
+  {
+    "id": "2",
+    "title": "Ethiopian History Overview",
+    "category": "History",
+    "description": "Explore the rich history of Ethiopia from ancient times to the modern era.",
+    "content_url": "https://example.com/ethiopian-history",
+    "created_by": "2",
+    "created_at": "2025-01-02T00:00:00Z"
+  },
+  {
+    "id": "3",
+    "title": "Traditional Ethiopian Recipes",
+    "category": "Culinary Arts",
+    "description": "Learn to cook traditional Ethiopian dishes like injera, doro wat, and kitfo.",
+    "content_url": "https://example.com/ethiopian-recipes",
+    "created_by": "2",
+    "created_at": "2025-01-03T00:00:00Z"
+  }
+]

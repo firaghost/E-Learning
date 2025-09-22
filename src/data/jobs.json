@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "title": "Software Developer",
+    "company": "EthioTech Solutions",
+    "location": "Addis Ababa, Ethiopia",
+    "description": "We are looking for a skilled software developer with React and Node.js experience to join our team in Addis Ababa.",
+    "tags": ["React", "Node.js", "JavaScript"],
+    "posted_by": "3",
+    "created_at": "2025-01-01T00:00:00Z"
+  },
+  {
+    "id": "2",
+    "title": "Mobile App Developer",
+    "company": "MobileEthiopia",
+    "location": "Remote",
+    "description": "Join our team to build innovative mobile applications for the Ethiopian market.",
+    "tags": ["React Native", "Flutter", "Mobile Development"],
+    "posted_by": "3",
+    "created_at": "2025-01-02T00:00:00Z"
+  },
+  {
+    "id": "3",
+    "title": "Data Analyst",
+    "company": "Ethiopian Analytics",
+    "location": "Dire Dawa, Ethiopia",
+    "description": "Analyze data to help Ethiopian businesses make informed decisions.",
+    "tags": ["Python", "Data Analysis", "Statistics"],
+    "posted_by": "3",
+    "created_at": "2025-01-03T00:00:00Z"
+  }
+]
