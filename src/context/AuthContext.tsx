@@ -3,11 +3,13 @@ import { User } from '../types/User';
 import { getCurrentUser } from '../utils/auth';
 import * as authUtils from '../utils/auth';
 import { login as apiLogin, register as apiRegister } from '../services/mockApi';
+import { signInWithGoogle } from '../services/firebase';
 
 interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
   register: (userData: Omit<User, 'id' | 'created_at' | 'updated_at'>) => Promise<void>;
+  loginWithGoogle: () => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
 }
@@ -54,6 +56,34 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const loginWithGoogle = async () => {
+    try {
+      // Sign in with Google
+      const { user: firebaseUser, token } = await signInWithGoogle();
+      
+      // Check if user exists in our system, if not create them
+      // For this demo, we'll create a mock user based on Google user data
+      const mockUser: User = {
+        id: firebaseUser.uid,
+        name: firebaseUser.displayName || 'Google User',
+        email: firebaseUser.email || '',
+        role: 'student', // Default role for Google signups
+        created_at: new Date(),
+        updated_at: new Date()
+      };
+      
+      // Store token in localStorage
+      localStorage.setItem('token', token);
+      
+      // Update state
+      setUser(mockUser);
+      setIsAuthenticated(true);
+    } catch (error) {
+      console.error('Google login error:', error);
+      throw error;
+    }
+  };
+
   const register = async (userData: Omit<User, 'id' | 'created_at' | 'updated_at'>) => {
     try {
       // Use mock API service
@@ -91,6 +121,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     user,
     login,
     register,
+    loginWithGoogle,
     logout,
     isAuthenticated,
   };
