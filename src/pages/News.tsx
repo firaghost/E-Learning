@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useAuth } from '../context/AuthContext';
 import { News as NewsType } from '../types/News';
 import { getPublishedNews, getFeaturedNews, searchNews, getNewsByCategory } from '../services/newsService';
 
 const News: React.FC = () => {
+  const { user } = useAuth();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [news, setNews] = useState<NewsType[]>([]);
   const [featuredNews, setFeaturedNews] = useState<NewsType[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
+  const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || 'All');
   const [searchResults, setSearchResults] = useState<NewsType[]>([]);
 
   const categories = ['All', 'Partnership', 'Product Update', 'Education', 'Success Story', 'Community'];
@@ -34,9 +37,28 @@ const News: React.FC = () => {
     fetchNews();
   }, []);
 
+  // Handle initial URL parameters
+  useEffect(() => {
+    const category = searchParams.get('category');
+    const search = searchParams.get('search');
+    
+    if (search) {
+      handleSearch({ preventDefault: () => {} } as React.FormEvent);
+    } else if (category && category !== 'All') {
+      handleCategoryFilter(category);
+    }
+  }, []);
+
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
+
+    // Update URL parameters
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('search', searchQuery);
+    newParams.delete('category');
+    setSearchParams(newParams);
+    setSelectedCategory('All');
 
     try {
       const results = await searchNews(searchQuery);
@@ -50,6 +72,16 @@ const News: React.FC = () => {
     setSelectedCategory(category);
     setSearchResults([]);
     setSearchQuery('');
+    
+    // Update URL parameters
+    const newParams = new URLSearchParams(searchParams);
+    if (category === 'All') {
+      newParams.delete('category');
+    } else {
+      newParams.set('category', category);
+    }
+    newParams.delete('search');
+    setSearchParams(newParams);
 
     if (category === 'All') {
       return;
@@ -87,9 +119,24 @@ const News: React.FC = () => {
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             Latest <span className="bg-clip-text text-transparent bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow">News</span>
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8">
             Stay updated with the latest developments, partnerships, and success stories from the GrowNet community.
           </p>
+          
+          {/* Admin Create News Button */}
+          {user && user.role === 'admin' && (
+            <div className="flex justify-center">
+              <Link
+                to="/create-news"
+                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow text-white font-medium rounded-lg hover:shadow-lg transition-all duration-300"
+              >
+                <svg className="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+                Create News Article
+              </Link>
+            </div>
+          )}
         </motion.div>
 
         {/* Search and Filter */}

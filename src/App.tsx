@@ -16,6 +16,8 @@ import CreateTutor from './pages/CreateTutor';
 import CreateCourse from './pages/CreateCourse';
 import CourseDetail from './pages/CourseDetail';
 import News from './pages/News';
+import NewsDetail from './pages/NewsDetail';
+import CreateNews from './pages/CreateNews';
 
 function App() {
   return (
@@ -32,6 +34,7 @@ function App() {
                 <Route path="/education" element={<Education />} />
                 <Route path="/tutoring" element={<Tutoring />} />
                 <Route path="/news" element={<News />} />
+                <Route path="/news/:id" element={<NewsDetail />} />
                 <Route path="/courses/:id" element={<CourseDetail />} />
                 <Route path="/dashboard" element={
                   <ProtectedRoute>
@@ -41,6 +44,11 @@ function App() {
                 <Route path="/create-course" element={
                   <ProtectedRoute>
                     <CreateCourse />
+                  </ProtectedRoute>
+                } />
+                <Route path="/create-news" element={
+                  <ProtectedRoute>
+                    <CreateNews />
                   </ProtectedRoute>
                 } />
                 <Route path="/education/create" element={
