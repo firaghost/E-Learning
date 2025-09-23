@@ -9,11 +9,9 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Education from './pages/Education';
-import Jobs from './pages/Jobs';
 import Tutoring from './pages/Tutoring';
 import Dashboard from './pages/Dashboard';
 import CreateResource from './pages/CreateResource';
-import CreateJob from './pages/CreateJob';
 import CreateTutor from './pages/CreateTutor';
 
 function App() {
@@ -29,7 +27,6 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/education" element={<Education />} />
-                <Route path="/jobs" element={<Jobs />} />
                 <Route path="/tutoring" element={<Tutoring />} />
                 <Route path="/dashboard" element={
                   <ProtectedRoute>
@@ -39,11 +36,6 @@ function App() {
                 <Route path="/education/create" element={
                   <ProtectedRoute>
                     <CreateResource />
-                  </ProtectedRoute>
-                } />
-                <Route path="/jobs/create" element={
-                  <ProtectedRoute>
-                    <CreateJob />
                   </ProtectedRoute>
                 } />
                 <Route path="/tutoring/create" element={

@@ -2,7 +2,6 @@ import React from 'react';
 import { useAuth } from '../context/AuthContext';
 import StudentDashboard from '../components/dashboards/StudentDashboard';
 import TutorDashboard from '../components/dashboards/TutorDashboard';
-import EmployerDashboard from '../components/dashboards/EmployerDashboard';
 import AdminDashboard from '../components/dashboards/AdminDashboard';
 
 const Dashboard: React.FC = () => {
@@ -15,8 +14,6 @@ const Dashboard: React.FC = () => {
         return <StudentDashboard />;
       case 'tutor':
         return <TutorDashboard />;
-      case 'employer':
-        return <EmployerDashboard />;
       case 'admin':
         return <AdminDashboard />;
       default:

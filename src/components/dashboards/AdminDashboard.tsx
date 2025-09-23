@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
-import { getAllJobs, deleteJob } from '../../services/jobService';
 import { getAllResources, deleteResource } from '../../services/resourceService';
 import { getAllTutors, deleteTutor } from '../../services/tutorService';
-import { Job } from '../../types/Job';
+import { getAllJobs, deleteJob } from '../../services/jobService';
 import { Resource } from '../../types/Resource';
 import { Tutor } from '../../types/Tutor';
+import { Job } from '../../types/Job';
 
 const AdminDashboard: React.FC = () => {
   const { user } = useAuth();

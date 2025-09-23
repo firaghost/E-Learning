@@ -20,7 +20,6 @@ const Navbar: React.FC = () => {
     const baseItems = [
       { name: 'Dashboard', path: '/dashboard' },
       { name: 'Education', path: '/education' },
-      { name: 'Jobs', path: '/jobs' },
       { name: 'Tutoring', path: '/tutoring' }
     ];
 
@@ -28,7 +27,6 @@ const Navbar: React.FC = () => {
       return [
         { name: 'Home', path: '/' },
         { name: 'Education', path: '/education' },
-        { name: 'Jobs', path: '/jobs' },
         { name: 'Tutoring', path: '/tutoring' }
       ];
     }
@@ -43,20 +41,12 @@ const Navbar: React.FC = () => {
           { name: 'My Sessions', path: '/tutoring' },
           { name: 'Resources', path: '/education' }
         ];
-      case 'employer':
-        return [
-          { name: 'Dashboard', path: '/dashboard' },
-          { name: 'My Jobs', path: '/jobs' },
-          { name: 'Post Job', path: '/jobs/create' }
-        ];
       case 'admin':
         return [
           { name: 'Dashboard', path: '/dashboard' },
           { name: 'Education', path: '/education' },
-          { name: 'Jobs', path: '/jobs' },
           { name: 'Tutoring', path: '/tutoring' },
           { name: 'Create Resource', path: '/education/create' },
-          { name: 'Create Job', path: '/jobs/create' },
           { name: 'Create Tutor', path: '/tutoring/create' }
         ];
       default:

@@ -90,7 +90,6 @@ const Login: React.FC = () => {
             <div className="text-xs space-y-1">
               <p><strong>Student:</strong> student@example.com</p>
               <p><strong>Tutor:</strong> tutor@example.com</p>
-              <p><strong>Employer:</strong> employer@example.com</p>
               <p><strong>Admin:</strong> admin@example.com</p>
               <p><strong>Password:</strong> password123</p>
             </div>

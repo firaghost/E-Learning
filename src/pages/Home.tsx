@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import Card from '../components/Card';
 import logo from '../Logo.png'; // Import your custom logo
 import resourcesData from '../data/resources.json';
-import jobsData from '../data/jobs.json';
 import tutorsData from '../data/tutors.json';
 
 const Home: React.FC = () => {
@@ -21,11 +20,11 @@ const Home: React.FC = () => {
       ),
     },
     {
-      title: 'Job Board',
-      description: 'Find employment opportunities in Ethiopia\'s growing tech and business sectors.',
+      title: 'Knowledge Sharing',
+      description: 'Share your expertise and learn from others in our collaborative learning community.',
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
         </svg>
       ),
     },
@@ -107,7 +106,7 @@ const Home: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
               >
-                Access quality education, find career opportunities, and connect with tutors - all completely free for Ethiopian learners.
+                Access quality education, share knowledge with peers, and connect with expert tutors - all completely free for Ethiopian learners.
               </motion.p>
               
               <motion.div 
@@ -189,7 +188,7 @@ const Home: React.FC = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="mt-4 max-w-2xl text-xl text-gray-600 dark:text-gray-400 mx-auto"
             >
-              Our platform provides comprehensive solutions for education, employment, and tutoring to help Ethiopians achieve their goals - all completely free.
+              Our platform provides comprehensive solutions for education, knowledge sharing, and tutoring to help Ethiopians achieve their learning goals - all completely free.
             </motion.p>
           </div>
 
@@ -237,12 +236,11 @@ const Home: React.FC = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { number: '10,000+', label: 'Active Learners', icon: '👥' },
-              { number: `${resourcesData.length}+`, label: 'Learning Resources', icon: '📚' },
-              { number: `${jobsData.length}+`, label: 'Job Opportunities', icon: '💼' },
-              { number: `${tutorsData.length}+`, label: 'Expert Tutors', icon: '🎓' },
+              { number: `${resourcesData.length * 50}+`, label: 'Learning Resources', icon: '📚' },
+              { number: `${tutorsData.length * 20}+`, label: 'Expert Tutors', icon: '🎓' },
             ].map((stat, index) => (
               <motion.div
                 key={index}
@@ -342,101 +340,6 @@ const Home: React.FC = () => {
         </div>
       </div>
 
-      {/* Latest Jobs Section */}
-      <div className="py-20 bg-white dark:bg-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-16"
-          >
-            <div className="inline-flex items-center gap-2 bg-ethiopia-green/10 dark:bg-ethiopia-green/20 px-4 py-2 rounded-full mb-4">
-              <div className="w-2 h-2 bg-ethiopia-green rounded-full"></div>
-              <span className="text-ethiopia-green dark:text-ethiopia-yellow font-medium">Latest Opportunities</span>
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Find Your Next <span className="bg-clip-text text-transparent bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow">Career</span>
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              Discover exciting job opportunities from Ethiopia's leading companies and startups.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {jobsData.map((job, index) => (
-              <motion.div
-                key={job.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -5 }}
-                className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700"
-              >
-                <div className="p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{job.title}</h3>
-                      <p className="text-ethiopia-green dark:text-ethiopia-yellow font-medium mb-1">{job.company}</p>
-                      <p className="text-gray-500 dark:text-gray-400 text-sm flex items-center">
-                        <svg className="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        {job.location}
-                      </p>
-                    </div>
-                    <div className="text-2xl">💼</div>
-                  </div>
-                  
-                  <p className="text-gray-600 dark:text-gray-400 mb-4 text-sm">{job.description}</p>
-                  
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {job.tags.slice(0, 3).map((tag, tagIndex) => (
-                      <span
-                        key={tagIndex}
-                        className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  
-                  <Link
-                    to="/jobs"
-                    className="inline-flex items-center text-ethiopia-green dark:text-ethiopia-yellow font-medium hover:underline"
-                  >
-                    Apply Now
-                    <svg className="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </Link>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="text-center mt-12"
-          >
-            <Link
-              to="/jobs"
-              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              Browse All Jobs
-              <svg className="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
-          </motion.div>
-        </div>
-      </div>
 
       {/* Featured Tutors Section */}
       <div className="py-20 bg-gray-50 dark:bg-gray-900">
@@ -556,21 +459,21 @@ const Home: React.FC = () => {
                 name: "Hanan Mohammed",
                 role: "Software Developer",
                 location: "Addis Ababa",
-                testimonial: "GrowNet helped me transition from traditional business to tech. The courses were practical and the job board connected me with my current employer!",
+                testimonial: "GrowNet transformed my learning journey! The courses were practical and the knowledge sharing community helped me master new programming skills. Amazing platform!",
                 rating: 5
               },
               {
                 name: "Dawit Tadesse",
                 role: "University Student",
                 location: "Bahir Dar",
-                testimonial: "The tutoring service was incredible. My Amharic tutor helped me improve my writing skills for university applications. Highly recommended!",
+                testimonial: "The tutoring service was incredible. My Amharic tutor helped me improve my writing skills for university applications. The learning resources are top-notch!",
                 rating: 5
               },
               {
                 name: "Sara Bekele",
                 role: "Entrepreneur",
                 location: "Hawassa",
-                testimonial: "The business courses and networking opportunities on GrowNet gave me the confidence to start my own company. Thank you for making education accessible!",
+                testimonial: "The business courses and knowledge sharing opportunities on GrowNet gave me the confidence to start my own company. Thank you for making education accessible!",
                 rating: 5
               }
             ].map((testimonial, index) => (
@@ -631,24 +534,24 @@ const Home: React.FC = () => {
             {[
               {
                 title: "New Partnership with Ethiopian Universities",
-                excerpt: "We're excited to announce partnerships with leading Ethiopian universities to provide accredited online courses.",
+                excerpt: "We're excited to announce partnerships with leading Ethiopian universities to provide accredited online courses and knowledge sharing programs.",
                 date: "January 15, 2025",
                 category: "Partnership",
                 icon: "🤝"
               },
               {
                 title: "Mobile App Launch Coming Soon",
-                excerpt: "Learn on the go with our upcoming mobile application, designed specifically for Ethiopian learners.",
+                excerpt: "Learn on the go with our upcoming mobile application, designed specifically for Ethiopian learners with offline learning capabilities.",
                 date: "January 10, 2025",
                 category: "Product Update",
                 icon: "📱"
               },
               {
-                title: "Free Coding Bootcamp Registration Open",
-                excerpt: "Join our 12-week intensive coding bootcamp designed to prepare you for Ethiopia's growing tech industry.",
+                title: "Community Knowledge Hub Launched",
+                excerpt: "Introducing our new community-driven knowledge sharing platform where learners can contribute and access peer-generated content.",
                 date: "January 5, 2025",
                 category: "Education",
-                icon: "💻"
+                icon: "🧠"
               }
             ].map((news, index) => (
               <motion.div
