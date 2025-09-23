@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import EnvironmentBanner from './components/EnvironmentBanner';
 import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -24,9 +25,10 @@ function App() {
     <ThemeProvider>
       <AuthProvider>
         <Router>
-          <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900">
+          <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+            <EnvironmentBanner />
             <Navbar />
-            <main className="flex-grow">
+            <main className="flex-1">
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { createNews } from '../services/newsService';
+import { News } from '../types/News';
 
 const CreateNews: React.FC = () => {
   const navigate = useNavigate();
@@ -47,11 +48,16 @@ const CreateNews: React.FC = () => {
 
     setLoading(true);
     try {
-      const newsData = {
+      const newsData: Omit<News, 'id' | 'created_at' | 'updated_at'> = {
         ...formData,
         author_id: user.id,
         author_name: user.name,
-        tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0)
+        tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0),
+        is_published: true,
+        is_featured: false,
+        views: 0,
+        likes: 0,
+        published_at: new Date()
       };
 
       const newArticle = await createNews(newsData);

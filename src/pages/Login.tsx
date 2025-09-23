@@ -88,10 +88,10 @@ const Login: React.FC = () => {
           <div className="mb-6 bg-ethiopia-green/10 dark:bg-ethiopia-green/20 text-ethiopia-green dark:text-ethiopia-yellow p-4 rounded-lg">
             <h3 className="text-sm font-medium mb-2">Demo Credentials:</h3>
             <div className="text-xs space-y-1">
-              <p><strong>Student:</strong> student@example.com</p>
-              <p><strong>Tutor:</strong> tutor@example.com</p>
-              <p><strong>Admin:</strong> admin@example.com</p>
-              <p><strong>Password:</strong> password123</p>
+              <p><strong>Student:</strong> student@grownet.et / student123</p>
+              <p><strong>Tutor:</strong> tutor@grownet.et / tutor123</p>
+              <p><strong>Employer:</strong> employer@grownet.et / employer123</p>
+              <p><strong>Admin:</strong> admin@grownet.et / admin123</p>
             </div>
           </div>
           

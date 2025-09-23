@@ -56,10 +56,17 @@ const CreateCourse: React.FC = () => {
 
     setLoading(true);
     try {
-      const courseData = {
+      const courseData: Omit<Course, 'id' | 'created_at' | 'updated_at'> = {
         ...formData,
         created_by: user.id,
-        tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0)
+        instructor_name: user.name,
+        tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0),
+        difficulty_level: formData.difficulty_level as 'Beginner' | 'Intermediate' | 'Advanced',
+        price: parseFloat(formData.price.toString()),
+        enrollment_count: 0,
+        average_rating: 0,
+        total_ratings: 0,
+        is_published: true
       };
 
       const newCourse = await createCourse(courseData);

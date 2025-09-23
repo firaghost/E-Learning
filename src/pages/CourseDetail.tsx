@@ -4,38 +4,53 @@ import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { Course } from '../types/Course';
 import { Comment } from '../types/Comment';
-import { Rating } from '../types/Rating';
 import { getCourseById, enrollInCourse } from '../services/courseService';
 import { getCourseComments, createComment } from '../services/commentService';
-import { getCourseRatings, submitRating, getCourseRatingStats } from '../services/ratingService';
+import { isUserEnrolled } from '../services/enrollmentService';
+import CourseReviews from '../components/CourseReviews';
+import StarRating from '../components/StarRating';
 
 const CourseDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { user } = useAuth();
   const [course, setCourse] = useState<Course | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
-  const [ratings, setRatings] = useState<Rating[]>([]);
   const [loading, setLoading] = useState(true);
   const [enrolled, setEnrolled] = useState(false);
   const [newComment, setNewComment] = useState('');
-  const [userRating, setUserRating] = useState(0);
-  const [userReview, setUserReview] = useState('');
-  const [showRatingForm, setShowRatingForm] = useState(false);
+
+  // Function to refresh course data
+  const refreshCourseData = async () => {
+    if (!id) return;
+    
+    try {
+      const updatedCourse = await getCourseById(id);
+      if (updatedCourse) {
+        setCourse(updatedCourse);
+      }
+    } catch (error) {
+      console.error('Error refreshing course data:', error);
+    }
+  };
 
   useEffect(() => {
     const fetchCourseData = async () => {
       if (!id) return;
       
       try {
-        const [courseData, commentsData, ratingsData] = await Promise.all([
+        const [courseData, commentsData] = await Promise.all([
           getCourseById(id),
-          getCourseComments(id),
-          getCourseRatings(id)
+          getCourseComments(id)
         ]);
         
         setCourse(courseData || null);
         setComments(commentsData);
-        setRatings(ratingsData);
+        
+        // Check if user is already enrolled
+        if (user && courseData) {
+          const userEnrolled = await isUserEnrolled(id, user.id);
+          setEnrolled(userEnrolled);
+        }
       } catch (error) {
         console.error('Error fetching course data:', error);
       } finally {
@@ -44,7 +59,7 @@ const CourseDetail: React.FC = () => {
     };
 
     fetchCourseData();
-  }, [id]);
+  }, [id, user]);
 
   const handleEnroll = async () => {
     if (!user || !course) return;
@@ -52,6 +67,10 @@ const CourseDetail: React.FC = () => {
     try {
       await enrollInCourse(course.id, user.id);
       setEnrolled(true);
+      
+      // Refresh course data to get updated enrollment count
+      await refreshCourseData();
+      
       alert('Successfully enrolled in the course!');
     } catch (error) {
       console.error('Error enrolling in course:', error);
@@ -81,55 +100,6 @@ const CourseDetail: React.FC = () => {
     }
   };
 
-  const handleRatingSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!user || !course || userRating === 0) return;
-
-    try {
-      const rating = await submitRating({
-        course_id: course.id,
-        user_id: user.id,
-        user_name: user.name,
-        rating: userRating,
-        review: userReview.trim() || undefined
-      });
-      
-      setRatings([rating, ...ratings.filter(r => r.user_id !== user.id)]);
-      setShowRatingForm(false);
-      setUserRating(0);
-      setUserReview('');
-      alert('Rating submitted successfully!');
-    } catch (error) {
-      console.error('Error submitting rating:', error);
-      alert('Failed to submit rating');
-    }
-  };
-
-  const renderStars = (rating: number, interactive: boolean = false, onRate?: (rating: number) => void) => {
-    return (
-      <div className="flex items-center">
-        {[1, 2, 3, 4, 5].map((star) => (
-          <button
-            key={star}
-            type={interactive ? "button" : undefined}
-            onClick={interactive && onRate ? () => onRate(star) : undefined}
-            className={`${interactive ? 'cursor-pointer hover:scale-110' : 'cursor-default'} transition-transform`}
-            disabled={!interactive}
-          >
-            <svg
-              className={`h-5 w-5 ${
-                star <= rating ? 'text-ethiopia-yellow' : 'text-gray-300 dark:text-gray-600'
-              }`}
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-            </svg>
-          </button>
-        ))}
-      </div>
-    );
-  };
 
   if (loading) {
     return (
@@ -184,7 +154,7 @@ const CourseDetail: React.FC = () => {
               <div className="flex items-center gap-6 mb-6">
                 <div className="flex items-center gap-2">
                   <div className="h-10 w-10 bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow rounded-full flex items-center justify-center text-white font-bold">
-                    {course.instructor_name.split(' ').map(n => n[0]).join('')}
+                    {course.instructor_name.split(' ').map((n: string) => n[0]).join('')}
                   </div>
                   <div>
                     <p className="font-medium text-gray-900 dark:text-white">{course.instructor_name}</p>
@@ -193,7 +163,7 @@ const CourseDetail: React.FC = () => {
                 </div>
                 
                 <div className="flex items-center gap-2">
-                  {renderStars(course.average_rating)}
+                  <StarRating rating={course.average_rating} size="sm" />
                   <span className="text-sm text-gray-600 dark:text-gray-400">
                     ({course.total_ratings} reviews)
                   </span>
@@ -259,95 +229,14 @@ const CourseDetail: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Ratings Section */}
+        {/* Reviews Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-8"
+          className="mb-8"
         >
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Ratings & Reviews</h2>
-            {user && (
-              <button
-                onClick={() => setShowRatingForm(!showRatingForm)}
-                className="px-4 py-2 bg-ethiopia-green text-white rounded-lg hover:bg-ethiopia-yellow transition-colors"
-              >
-                Write a Review
-              </button>
-            )}
-          </div>
-
-          {showRatingForm && (
-            <motion.form
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              onSubmit={handleRatingSubmit}
-              className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-6"
-            >
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Your Rating
-                </label>
-                {renderStars(userRating, true, setUserRating)}
-              </div>
-              
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Review (Optional)
-                </label>
-                <textarea
-                  value={userReview}
-                  onChange={(e) => setUserReview(e.target.value)}
-                  rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-ethiopia-green focus:border-transparent dark:bg-gray-800 dark:text-white"
-                  placeholder="Share your thoughts about this course..."
-                />
-              </div>
-              
-              <div className="flex gap-3">
-                <button
-                  type="submit"
-                  disabled={userRating === 0}
-                  className="px-4 py-2 bg-ethiopia-green text-white rounded-lg hover:bg-ethiopia-yellow transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Submit Review
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowRatingForm(false)}
-                  className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors"
-                >
-                  Cancel
-                </button>
-              </div>
-            </motion.form>
-          )}
-
-          <div className="space-y-4">
-            {ratings.map((rating) => (
-              <div key={rating.id} className="border-b border-gray-200 dark:border-gray-700 pb-4">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="h-8 w-8 bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow rounded-full flex items-center justify-center text-white text-sm font-bold">
-                    {rating.user_name.split(' ').map(n => n[0]).join('')}
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-900 dark:text-white">{rating.user_name}</p>
-                    <div className="flex items-center gap-2">
-                      {renderStars(rating.rating)}
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
-                        {rating.created_at.toLocaleDateString()}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                {rating.review && (
-                  <p className="text-gray-600 dark:text-gray-400 ml-11">{rating.review}</p>
-                )}
-              </div>
-            ))}
-          </div>
+          <CourseReviews courseId={course.id} onCourseDataUpdate={refreshCourseData} />
         </motion.div>
 
         {/* Comments Section */}
@@ -384,7 +273,7 @@ const CourseDetail: React.FC = () => {
             {comments.map((comment) => (
               <div key={comment.id} className="flex gap-4">
                 <div className="h-10 w-10 bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
-                  {comment.user_name.split(' ').map(n => n[0]).join('')}
+                  {comment.user_name.split(' ').map((n: string) => n[0]).join('')}
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">

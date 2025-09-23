@@ -45,11 +45,11 @@ const NewsDetail: React.FC = () => {
 
     try {
       if (liked) {
-        await unlikeNews(article.id, user.id);
+        await unlikeNews(article.id);
         setLikesCount(prev => prev - 1);
         setLiked(false);
       } else {
-        await likeNews(article.id, user.id);
+        await likeNews(article.id);
         setLikesCount(prev => prev + 1);
         setLiked(true);
       }

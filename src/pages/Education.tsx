@@ -1,19 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { getAllCourses } from '../services/courseService';
 import { Course } from '../types/Course';
+import StarRating from '../components/StarRating';
 
 const Education: React.FC = () => {
   const { user } = useAuth();
+  const location = useLocation();
   const [courses, setCourses] = useState<Course[]>([]);
   const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   const categories = ['all', 'History', 'Language Learning', 'Culinary Arts', 'Mathematics', 'Business', 'Technology', 'Science', 'Arts & Culture'];
+
+  // Manual refresh function
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    try {
+      const data = await getAllCourses();
+      setCourses(data);
+      setFilteredCourses(data);
+    } catch (error) {
+      console.error('Error refreshing courses:', error);
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
 
   useEffect(() => {
@@ -31,6 +48,51 @@ const Education: React.FC = () => {
 
     fetchCourses();
   }, []);
+
+  // Add a focus event listener to refresh courses when user returns to the page
+  useEffect(() => {
+    const handleFocus = async () => {
+      try {
+        const data = await getAllCourses();
+        setCourses(data);
+        setFilteredCourses(data);
+      } catch (error) {
+        console.error('Error refreshing courses:', error);
+      }
+    };
+
+    window.addEventListener('focus', handleFocus);
+    
+    // Also listen for visibility change (when tab becomes visible)
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        handleFocus();
+      }
+    };
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
+
+  // Refresh courses when navigating back to this page
+  useEffect(() => {
+    const refreshCourses = async () => {
+      try {
+        const data = await getAllCourses();
+        setCourses(data);
+        setFilteredCourses(data);
+      } catch (error) {
+        console.error('Error refreshing courses on navigation:', error);
+      }
+    };
+
+    // Refresh courses when location changes (user navigates back)
+    refreshCourses();
+  }, [location.pathname]);
 
   useEffect(() => {
     let result = courses;
@@ -52,24 +114,6 @@ const Education: React.FC = () => {
     setFilteredCourses(result);
   }, [searchQuery, selectedCategory, courses]);
 
-  const renderStars = (rating: number) => {
-    return (
-      <div className="flex items-center">
-        {[1, 2, 3, 4, 5].map((star) => (
-          <svg
-            key={star}
-            className={`h-4 w-4 ${
-              star <= rating ? 'text-ethiopia-yellow' : 'text-gray-300 dark:text-gray-600'
-            }`}
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-          </svg>
-        ))}
-      </div>
-    );
-  };
 
   if (loading) {
     return (
@@ -162,13 +206,30 @@ const Education: React.FC = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="mb-6"
+          className="mb-6 flex items-center justify-between"
         >
           <p className="text-gray-600 dark:text-gray-400">
             Showing {filteredCourses.length} of {courses.length} courses
             {selectedCategory !== 'all' && ` in ${selectedCategory}`}
             {searchQuery && ` matching "${searchQuery}"`}
           </p>
+          
+          {/* Refresh Button */}
+          <button
+            onClick={handleRefresh}
+            disabled={refreshing}
+            className="flex items-center gap-2 px-4 py-2 text-sm bg-ethiopia-green text-white rounded-lg hover:bg-ethiopia-green/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            <svg 
+              className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            {refreshing ? 'Refreshing...' : 'Refresh'}
+          </button>
         </motion.div>
 
         {/* Courses Grid */}
@@ -215,7 +276,7 @@ const Education: React.FC = () => {
                 
                 <div className="flex items-center gap-2 mb-4">
                   <div className="h-8 w-8 bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow rounded-full flex items-center justify-center text-white text-sm font-bold">
-                    {course.instructor_name.split(' ').map(n => n[0]).join('')}
+                    {course.instructor_name.split(' ').map((n: string) => n[0]).join('')}
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-900 dark:text-white">{course.instructor_name}</p>
@@ -225,7 +286,7 @@ const Education: React.FC = () => {
                 
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
-                    {renderStars(course.average_rating)}
+                    <StarRating rating={course.average_rating} size="sm" />
                     <span className="text-sm text-gray-600 dark:text-gray-400">({course.total_ratings})</span>
                   </div>
                   <div className="text-lg font-bold text-ethiopia-green dark:text-ethiopia-yellow">
@@ -234,9 +295,14 @@ const Education: React.FC = () => {
                 </div>
                 
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-500 dark:text-gray-400">
-                    {course.enrollment_count} students
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-ethiopia-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+                    </svg>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                      {course.enrollment_count} student{course.enrollment_count !== 1 ? 's' : ''} enrolled
+                    </span>
+                  </div>
                   <Link
                     to={`/courses/${course.id}`}
                     className="inline-flex items-center text-ethiopia-green dark:text-ethiopia-yellow font-medium hover:underline"

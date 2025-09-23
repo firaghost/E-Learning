@@ -1,8 +1,6 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { User } from '../types/User';
-import { getCurrentUser } from '../utils/auth';
-import * as authUtils from '../utils/auth';
-import { login as apiLogin, register as apiRegister } from '../services/mockApi';
+import { login as apiLogin, register as apiRegister, getCurrentUser as getUser, logout as apiLogout } from '../services/authService';
 import { signInWithGoogle } from '../services/firebase';
 
 interface AuthContextType {
@@ -26,13 +24,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     // Check if user is already authenticated on app load
-    const checkAuthStatus = () => {
-      const authenticated = authUtils.isAuthenticated();
-      setIsAuthenticated(authenticated);
-      
-      if (authenticated) {
-        const currentUser = getCurrentUser();
-        setUser(currentUser);
+    const checkAuthStatus = async () => {
+      try {
+        const currentUser = await getUser();
+        if (currentUser) {
+          setUser(currentUser);
+          setIsAuthenticated(true);
+        }
+      } catch (error) {
+        // User not authenticated or token expired
+        setUser(null);
+        setIsAuthenticated(false);
       }
     };
 
@@ -41,11 +43,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = async (email: string, password: string) => {
     try {
-      // Use mock API service
+      // Use our new authentication service
       const { user, token } = await apiLogin(email, password);
-      
-      // Store token in localStorage
-      localStorage.setItem('token', token);
       
       // Update state
       setUser(user);
@@ -86,18 +85,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const register = async (userData: Omit<User, 'id' | 'created_at' | 'updated_at'>) => {
     try {
-      // Use mock API service
+      // Use our new authentication service
       const registerData = {
         name: userData.name,
         email: userData.email,
         password: 'password123', // Default password for demo
-        role: userData.role as 'student' | 'tutor' | 'employer'
+        role: userData.role
       };
       
       const { user, token } = await apiRegister(registerData);
-      
-      // Store token in localStorage
-      localStorage.setItem('token', token);
       
       // Update state
       setUser(user);
@@ -108,13 +104,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    // Remove token from localStorage
-    localStorage.removeItem('token');
-    
-    // Update state
-    setUser(null);
-    setIsAuthenticated(false);
+  const logout = async () => {
+    try {
+      // Use our new authentication service
+      await apiLogout();
+      
+      // Update state
+      setUser(null);
+      setIsAuthenticated(false);
+    } catch (error) {
+      // Even if logout fails on server, clear local state
+      setUser(null);
+      setIsAuthenticated(false);
+    }
   };
 
   const value = {

@@ -65,7 +65,11 @@ const CreateTutor: React.FC = () => {
     try {
       const tutorData: Omit<Tutor, 'id' | 'created_at' | 'updated_at'> = {
         ...formData,
-        created_by: user.id
+        created_by: user.id,
+        // Set default values for new required fields
+        availability: formData.availability.length > 0 ? formData.availability : ['Monday', 'Wednesday', 'Friday'],
+        specializations: formData.specializations.length > 0 ? formData.specializations : [formData.subject],
+        languages: formData.languages.length > 0 ? formData.languages : ['Amharic', 'English']
       };
 
       await createTutor(tutorData);
