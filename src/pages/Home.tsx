@@ -14,6 +14,7 @@ const Home: React.FC = () => {
   const [news, setNews] = useState<News[]>([]);
   const [loading, setLoading] = useState(true);
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -276,7 +277,7 @@ const Home: React.FC = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="text-4xl mb-2">{stat.icon}</div>
+                <div className="text-4xl mb-4">{stat.icon}</div>
                 <div className="text-3xl md:text-4xl font-bold text-ethiopia-green dark:text-ethiopia-yellow mb-2">
                   {stat.number}
                 </div>

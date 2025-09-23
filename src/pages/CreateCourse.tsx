@@ -329,9 +329,9 @@ const CreateCourse: React.FC = () => {
               </p>
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">🎯 Specific Learning Goals</h3>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">💡 Fair Pricing</h3>
               <p className="text-gray-600 dark:text-gray-400 text-sm">
-                Define clear learning objectives and outcomes for your students.
+                Set a competitive price that reflects the value and quality of your course content.
               </p>
             </div>
             <div>

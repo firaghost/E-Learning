@@ -272,7 +272,7 @@ const CreateNews: React.FC = () => {
               </p>
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">📖 Engaging Excerpts</h3>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">📚 Engaging Excerpts</h3>
               <p className="text-gray-600 dark:text-gray-400 text-sm">
                 Create excerpts that hook readers and encourage them to read the full article.
               </p>

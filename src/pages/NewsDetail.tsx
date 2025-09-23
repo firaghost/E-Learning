@@ -14,6 +14,7 @@ const NewsDetail: React.FC = () => {
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
 
+
   useEffect(() => {
     const fetchArticle = async () => {
       if (!id) return;
@@ -106,9 +107,7 @@ const NewsDetail: React.FC = () => {
             to="/news"
             className="inline-flex items-center text-ethiopia-green dark:text-ethiopia-yellow hover:underline"
           >
-            <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
+⬅️
             Back to News
           </Link>
         </motion.div>
@@ -121,12 +120,18 @@ const NewsDetail: React.FC = () => {
           className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-8"
         >
           <div className="flex items-center gap-4 mb-6">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-ethiopia-green/10 text-ethiopia-green dark:bg-ethiopia-yellow/10 dark:text-ethiopia-yellow">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium bg-ethiopia-green/10 text-ethiopia-green dark:bg-ethiopia-yellow/10 dark:text-ethiopia-yellow">
+              {article.category === 'Partnership' ? '🤝' : 
+               article.category === 'Product Update' ? '📱' : 
+               article.category === 'Education' ? '🧠' :
+               article.category === 'Success Story' ? '⭐' :
+               article.category === 'Community' ? '👥' : '💡'}
               {article.category}
             </span>
             {article.is_featured && (
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-ethiopia-yellow/10 text-ethiopia-yellow">
-                ⭐ Featured
+              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-ethiopia-yellow/10 text-ethiopia-yellow">
+⭐
+                Featured
               </span>
             )}
           </div>
@@ -149,7 +154,10 @@ const NewsDetail: React.FC = () => {
                 <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
                   <span>{article.published_at?.toLocaleDateString()}</span>
                   <span>•</span>
-                  <span>{article.views} views</span>
+                  <span className="flex items-center gap-1">
+👁️
+                    {article.views} views
+                  </span>
                 </div>
               </div>
             </div>
@@ -164,9 +172,7 @@ const NewsDetail: React.FC = () => {
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
                   }`}
                 >
-                  <svg className="h-4 w-4" fill={liked ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                  </svg>
+                  ❤️
                   {likesCount}
                 </button>
               )}
@@ -175,9 +181,7 @@ const NewsDetail: React.FC = () => {
                 onClick={handleShare}
                 className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
               >
-                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
-                </svg>
+🔗
                 Share
               </button>
             </div>

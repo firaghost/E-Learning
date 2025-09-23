@@ -15,6 +15,7 @@ const Education: React.FC = () => {
 
   const categories = ['all', 'History', 'Language Learning', 'Culinary Arts', 'Mathematics', 'Business', 'Technology', 'Science', 'Arts & Culture'];
 
+
   useEffect(() => {
     const fetchCourses = async () => {
       try {
@@ -188,9 +189,22 @@ const Education: React.FC = () => {
             >
               <div className="p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-ethiopia-green/10 text-ethiopia-green dark:bg-ethiopia-yellow/10 dark:text-ethiopia-yellow">
-                    {course.category}
-                  </span>
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-ethiopia-green/10 text-ethiopia-green dark:bg-ethiopia-yellow/10 dark:text-ethiopia-yellow">
+                      {course.category}
+                    </span>
+                    <div className="text-2xl">
+                      {course.category === 'Language Learning' ? '🗣️' : 
+                       course.category === 'History' ? '📜' : 
+                       course.category === 'Culinary Arts' ? '🍽️' :
+                       course.category === 'Mathematics' ? '🔢' :
+                       course.category === 'Business' ? '💼' :
+                       course.category === 'Technology' ? '💻' :
+                       course.category === 'Science' ? '🔬' :
+                       course.category === 'Arts & Culture' ? '🎨' :
+                       '📚'}
+                    </div>
+                  </div>
                   <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200">
                     {course.difficulty_level}
                   </span>

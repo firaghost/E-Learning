@@ -17,6 +17,7 @@ const News: React.FC = () => {
 
   const categories = ['All', 'Partnership', 'Product Update', 'Education', 'Success Story', 'Community'];
 
+
   useEffect(() => {
     const fetchNews = async () => {
       try {
@@ -130,9 +131,7 @@ const News: React.FC = () => {
                 to="/create-news"
                 className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow text-white font-medium rounded-lg hover:shadow-lg transition-all duration-300"
               >
-                <svg className="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                </svg>
+➕
                 Create News Article
               </Link>
             </div>
@@ -204,10 +203,16 @@ const News: React.FC = () => {
                   )}
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-4">
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-ethiopia-green/10 text-ethiopia-green dark:bg-ethiopia-yellow/10 dark:text-ethiopia-yellow">
+                      <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-ethiopia-green/10 text-ethiopia-green dark:bg-ethiopia-yellow/10 dark:text-ethiopia-yellow">
+                        {article.category === 'Partnership' ? '🤝' : 
+                         article.category === 'Product Update' ? '📱' : 
+                         article.category === 'Education' ? '🧠' :
+                         article.category === 'Success Story' ? '⭐' :
+                         article.category === 'Community' ? '👥' : '💡'}
                         {article.category}
                       </span>
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
+                      <span className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
+                        📅
                         {article.published_at?.toLocaleDateString()}
                       </span>
                     </div>
@@ -265,14 +270,18 @@ const News: React.FC = () => {
                 )}
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-4">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-ethiopia-green/10 text-ethiopia-green dark:bg-ethiopia-yellow/10 dark:text-ethiopia-yellow">
-                      {article.category}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-ethiopia-green/10 text-ethiopia-green dark:bg-ethiopia-yellow/10 dark:text-ethiopia-yellow">
+                        {article.category === 'Partnership' ? '🤝' : 
+                         article.category === 'Product Update' ? '📱' : 
+                         article.category === 'Education' ? '🧠' :
+                         article.category === 'Success Story' ? '⭐' :
+                         article.category === 'Community' ? '👥' : '💡'}
+                        {article.category}
+                      </span>
+                    </div>
                     <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                      </svg>
+                      👁️
                       {article.views}
                     </div>
                   </div>
