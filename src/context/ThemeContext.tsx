@@ -14,27 +14,27 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>('light');
-
-  useEffect(() => {
-    // Check for saved theme in localStorage or default to light
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
-    } else if (typeof window !== 'undefined' && window.matchMedia) {
+  // Initialize theme from localStorage immediately to prevent flash
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme') as Theme | null;
+      if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
+        return savedTheme;
+      }
       // Check for system preference
       try {
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          setTheme('dark');
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
         }
       } catch (e) {
         // Ignore errors in test environment
       }
     }
-  }, []);
+    return 'light';
+  });
 
   useEffect(() => {
-    // Apply theme to document
+    // Apply theme to document immediately
     if (typeof document !== 'undefined') {
       document.documentElement.classList.toggle('dark', theme === 'dark');
       // Save theme to localStorage
