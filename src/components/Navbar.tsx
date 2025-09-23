@@ -20,14 +20,16 @@ const Navbar: React.FC = () => {
     const baseItems = [
       { name: 'Dashboard', path: '/dashboard' },
       { name: 'Education', path: '/education' },
-      { name: 'Tutoring', path: '/tutoring' }
+      { name: 'Tutoring', path: '/tutoring' },
+      { name: 'News', path: '/news' }
     ];
 
     if (!isAuthenticated) {
       return [
         { name: 'Home', path: '/' },
         { name: 'Education', path: '/education' },
-        { name: 'Tutoring', path: '/tutoring' }
+        { name: 'Tutoring', path: '/tutoring' },
+        { name: 'News', path: '/news' }
       ];
     }
 
@@ -39,13 +41,17 @@ const Navbar: React.FC = () => {
         return [
           { name: 'Dashboard', path: '/dashboard' },
           { name: 'My Sessions', path: '/tutoring' },
-          { name: 'Resources', path: '/education' }
+          { name: 'Resources', path: '/education' },
+          { name: 'News', path: '/news' },
+          { name: 'Create Course', path: '/create-course' }
         ];
       case 'admin':
         return [
           { name: 'Dashboard', path: '/dashboard' },
           { name: 'Education', path: '/education' },
           { name: 'Tutoring', path: '/tutoring' },
+          { name: 'News', path: '/news' },
+          { name: 'Create Course', path: '/create-course' },
           { name: 'Create Resource', path: '/education/create' },
           { name: 'Create Tutor', path: '/tutoring/create' }
         ];

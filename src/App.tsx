@@ -13,6 +13,9 @@ import Tutoring from './pages/Tutoring';
 import Dashboard from './pages/Dashboard';
 import CreateResource from './pages/CreateResource';
 import CreateTutor from './pages/CreateTutor';
+import CreateCourse from './pages/CreateCourse';
+import CourseDetail from './pages/CourseDetail';
+import News from './pages/News';
 
 function App() {
   return (
@@ -28,9 +31,16 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/education" element={<Education />} />
                 <Route path="/tutoring" element={<Tutoring />} />
+                <Route path="/news" element={<News />} />
+                <Route path="/courses/:id" element={<CourseDetail />} />
                 <Route path="/dashboard" element={
                   <ProtectedRoute>
                     <Dashboard />
+                  </ProtectedRoute>
+                } />
+                <Route path="/create-course" element={
+                  <ProtectedRoute>
+                    <CreateCourse />
                   </ProtectedRoute>
                 } />
                 <Route path="/education/create" element={

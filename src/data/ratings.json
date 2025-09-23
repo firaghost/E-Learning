@@ -1,0 +1,102 @@
+[
+  {
+    "id": "1",
+    "course_id": "1",
+    "user_id": "user1",
+    "user_name": "Dawit Tadesse",
+    "rating": 5,
+    "review": "Outstanding course! Dr. Alemayehu brings Ethiopian history to life with engaging storytelling and comprehensive coverage. The course materials are well-organized and the assignments help reinforce learning.",
+    "created_at": "2024-02-20T14:30:00Z",
+    "updated_at": null
+  },
+  {
+    "id": "2",
+    "course_id": "1",
+    "user_id": "user2",
+    "user_name": "Sara Bekele",
+    "rating": 5,
+    "review": "Excellent depth and cultural sensitivity. This course should be mandatory for all Ethiopians wanting to understand their heritage.",
+    "created_at": "2024-02-21T09:15:00Z",
+    "updated_at": null
+  },
+  {
+    "id": "3",
+    "course_id": "2",
+    "user_id": "user3",
+    "user_name": "Hanan Mohammed",
+    "rating": 4,
+    "review": "Great course for beginners! The pronunciation guides are very helpful, though I wish there were more interactive exercises.",
+    "created_at": "2024-02-22T16:45:00Z",
+    "updated_at": null
+  },
+  {
+    "id": "4",
+    "course_id": "2",
+    "user_id": "user4",
+    "user_name": "Alemayehu Teshome",
+    "rating": 5,
+    "review": "Perfect for learning Amharic! The instructor's approach is methodical and the cultural context provided makes learning more meaningful.",
+    "created_at": "2024-02-23T11:20:00Z",
+    "updated_at": null
+  },
+  {
+    "id": "5",
+    "course_id": "3",
+    "user_id": "user5",
+    "user_name": "Meron Getachew",
+    "rating": 5,
+    "review": "Authentic recipes with clear instructions! Sara's expertise shines through every lesson. My family loves the dishes I've learned to make.",
+    "created_at": "2024-02-24T13:10:00Z",
+    "updated_at": null
+  },
+  {
+    "id": "6",
+    "course_id": "3",
+    "user_id": "user6",
+    "user_name": "Yohannes Haile",
+    "rating": 5,
+    "review": "Amazing course! The traditional cooking techniques are explained beautifully and the ingredient substitutions for diaspora learners are very thoughtful.",
+    "created_at": "2024-02-25T08:30:00Z",
+    "updated_at": null
+  },
+  {
+    "id": "7",
+    "course_id": "4",
+    "user_id": "user7",
+    "user_name": "Tigist Worku",
+    "rating": 4,
+    "review": "Solid mathematics foundation. The Ethiopian curriculum alignment is helpful, though some advanced topics could use more examples.",
+    "created_at": "2024-02-26T10:45:00Z",
+    "updated_at": null
+  },
+  {
+    "id": "8",
+    "course_id": "4",
+    "user_id": "user8",
+    "user_name": "Bereket Assefa",
+    "rating": 5,
+    "review": "Excellent teaching methodology! Dr. Alemayehu makes complex mathematical concepts accessible and relevant to Ethiopian students.",
+    "created_at": "2024-02-27T15:20:00Z",
+    "updated_at": null
+  },
+  {
+    "id": "9",
+    "course_id": "5",
+    "user_id": "user9",
+    "user_name": "Rahel Tesfaye",
+    "rating": 4,
+    "review": "Insightful course on Ethiopian business culture. Very practical for anyone looking to do business in Ethiopia. Could benefit from more case studies.",
+    "created_at": "2024-02-28T12:00:00Z",
+    "updated_at": null
+  },
+  {
+    "id": "10",
+    "course_id": "5",
+    "user_id": "user10",
+    "user_name": "Solomon Kebede",
+    "rating": 5,
+    "review": "Invaluable insights into Ethiopian business practices! This course helped me understand the cultural nuances that are crucial for success in the Ethiopian market.",
+    "created_at": "2024-03-01T09:30:00Z",
+    "updated_at": null
+  }
+]

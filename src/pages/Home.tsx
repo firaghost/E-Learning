@@ -1,12 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Card from '../components/Card';
 import logo from '../Logo.png'; // Import your custom logo
-import resourcesData from '../data/resources.json';
+import { getAllCourses } from '../services/courseService';
+import { getRecentNews } from '../services/newsService';
+import { Course } from '../types/Course';
+import { News } from '../types/News';
 import tutorsData from '../data/tutors.json';
 
 const Home: React.FC = () => {
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [news, setNews] = useState<News[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [coursesData, newsData] = await Promise.all([
+          getAllCourses(),
+          getRecentNews(3)
+        ]);
+        setCourses(coursesData.slice(0, 6)); // Show only first 6 courses
+        setNews(newsData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const features = [
     {
       title: 'Education Hub',
@@ -239,7 +265,7 @@ const Home: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { number: '10,000+', label: 'Active Learners', icon: '👥' },
-              { number: `${resourcesData.length * 50}+`, label: 'Learning Resources', icon: '📚' },
+              { number: `${courses.length * 50}+`, label: 'Learning Resources', icon: '📚' },
               { number: `${tutorsData.length * 20}+`, label: 'Expert Tutors', icon: '🎓' },
             ].map((stat, index) => (
               <motion.div
@@ -284,9 +310,9 @@ const Home: React.FC = () => {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {resourcesData.map((resource, index) => (
+            {courses.map((course: Course, index: number) => (
               <motion.div
-                key={resource.id}
+                key={course.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -297,15 +323,15 @@ const Home: React.FC = () => {
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-4">
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-ethiopia-green/10 text-ethiopia-green dark:bg-ethiopia-yellow/10 dark:text-ethiopia-yellow">
-                      {resource.category}
+                      {course.category}
                     </span>
                     <div className="text-2xl">
-                      {resource.category === 'Language Learning' ? '🗣️' : 
-                       resource.category === 'History' ? '📜' : '🍽️'}
+                      {course.category === 'Language Learning' ? '🗣️' : 
+                       course.category === 'History' ? '📜' : '🍽️'}
                     </div>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{resource.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-4">{resource.description}</p>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{course.title}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-4">{course.description}</p>
                   <Link
                     to="/education"
                     className="inline-flex items-center text-ethiopia-green dark:text-ethiopia-yellow font-medium hover:underline"
@@ -531,29 +557,7 @@ const Home: React.FC = () => {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "New Partnership with Ethiopian Universities",
-                excerpt: "We're excited to announce partnerships with leading Ethiopian universities to provide accredited online courses and knowledge sharing programs.",
-                date: "January 15, 2025",
-                category: "Partnership",
-                icon: "🤝"
-              },
-              {
-                title: "Mobile App Launch Coming Soon",
-                excerpt: "Learn on the go with our upcoming mobile application, designed specifically for Ethiopian learners with offline learning capabilities.",
-                date: "January 10, 2025",
-                category: "Product Update",
-                icon: "📱"
-              },
-              {
-                title: "Community Knowledge Hub Launched",
-                excerpt: "Introducing our new community-driven knowledge sharing platform where learners can contribute and access peer-generated content.",
-                date: "January 5, 2025",
-                category: "Education",
-                icon: "🧠"
-              }
-            ].map((news, index) => (
+            {news.map((article: News, index: number) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
@@ -566,20 +570,28 @@ const Home: React.FC = () => {
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-4">
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-ethiopia-green/10 text-ethiopia-green dark:bg-ethiopia-yellow/10 dark:text-ethiopia-yellow">
-                      {news.category}
+                      {article.category}
                     </span>
-                    <div className="text-2xl">{news.icon}</div>
+                    <div className="text-2xl">
+                      {article.category === 'Partnership' ? '🤝' : 
+                       article.category === 'Product Update' ? '📱' : '🧠'}
+                    </div>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{news.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-4">{news.excerpt}</p>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{article.title}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-4">{article.excerpt}</p>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500 dark:text-gray-400">{news.date}</span>
-                    <button className="inline-flex items-center text-ethiopia-green dark:text-ethiopia-yellow font-medium hover:underline">
+                    <span className="text-sm text-gray-500 dark:text-gray-400">
+                      {article.published_at?.toLocaleDateString()}
+                    </span>
+                    <Link
+                      to={`/news/${article.id}`}
+                      className="inline-flex items-center text-ethiopia-green dark:text-ethiopia-yellow font-medium hover:underline"
+                    >
                       Read More
                       <svg className="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </motion.div>
