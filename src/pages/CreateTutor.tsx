@@ -14,7 +14,13 @@ const CreateTutor: React.FC = () => {
     subject: '',
     level: '',
     description: '',
-    contact_info: ''
+    contact_info: '',
+    experience: '',
+    rating: 5.0,
+    hourly_rate: 500,
+    availability: [] as string[],
+    specializations: [] as string[],
+    languages: [] as string[]
   });
 
   const subjects = [

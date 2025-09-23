@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAuth } from '../context/AuthContext';
+import { getAllTutors } from '../services/tutorService';
+import { Tutor } from '../types/Tutor';
+import BookingModal from '../components/BookingModal';
 import Card from '../components/Card';
 import SearchBar from '../components/SearchBar';
 import Filters from '../components/Filters';
-import { getAllTutors } from '../services/tutorService';
-import { Tutor } from '../types/Tutor';
 
 const Tutoring: React.FC = () => {
   const [tutors, setTutors] = useState<Tutor[]>([]);
@@ -15,7 +17,7 @@ const Tutoring: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [selectedTutor, setSelectedTutor] = useState<Tutor | null>(null);
   const [showModal, setShowModal] = useState(false);
-  const [showBookingForm, setShowBookingForm] = useState(false);
+  const [showBookingModal, setShowBookingModal] = useState(false);
 
   useEffect(() => {
     const fetchTutors = async () => {
@@ -69,11 +71,11 @@ const Tutoring: React.FC = () => {
   const closeModal = () => {
     setShowModal(false);
     setSelectedTutor(null);
-    setShowBookingForm(false);
+    setShowBookingModal(false);
   };
 
   const handleBookSession = () => {
-    setShowBookingForm(true);
+    setShowBookingModal(true);
   };
 
   // Get unique subjects for filter
@@ -254,7 +256,7 @@ const Tutoring: React.FC = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="mt-3">
-                {!showBookingForm ? (
+                {!showBookingModal ? (
                   <>
                     <div className="flex items-start justify-between mb-6">
                       <div className="flex items-center gap-3 mb-2">
@@ -413,7 +415,7 @@ const Tutoring: React.FC = () => {
                       </motion.div>
                       <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex-1">
                         <button
-                          onClick={() => setShowBookingForm(false)}
+                          onClick={() => setShowBookingModal(false)}
                           className="block w-full text-center bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-medium py-3 px-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-600"
                         >
                           Back
