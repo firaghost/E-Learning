@@ -29,7 +29,7 @@ const Navbar: React.FC = () => {
         { name: 'Home', path: '/' },
         { name: 'Education', path: '/education' },
         { name: 'Tutoring', path: '/tutoring' },
-        { name: 'News', path: '/news' }
+        { name: 'News', path: '/news' },
       ];
     }
 
@@ -51,6 +51,8 @@ const Navbar: React.FC = () => {
           { name: 'Education', path: '/education' },
           { name: 'Tutoring', path: '/tutoring' },
           { name: 'News', path: '/news' },
+          { name: 'Design', path: '/design-showcase' },
+          { name: 'Premium', path: '/premium-showcase' },
           { name: 'Create Course', path: '/create-course' },
           { name: 'Create News', path: '/create-news' },
           { name: 'Create Resource', path: '/education/create' },
@@ -64,7 +66,7 @@ const Navbar: React.FC = () => {
   const navItems = getNavItems();
 
   return (
-    <nav className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-lg">
+    <nav className="navbar shadow-medium">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20">
           <div className="flex">
@@ -75,11 +77,11 @@ const Navbar: React.FC = () => {
               >
                 <Link to={isAuthenticated ? "/dashboard" : "/"} className="flex items-center group">
                   <div className="relative">
-                    <img src={logo} className="h-12 w-12 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300" alt="E-Learning Platform Logo" />
-                    <div className="absolute inset-0 rounded-xl bg-gradient-to-tr from-ethiopia-green to-ethiopia-yellow opacity-20"></div>
+                    <img src={logo} className="h-12 w-12 rounded-xl shadow-medium group-hover:shadow-strong transition-all duration-300" alt="E-Learning Platform Logo" />
+                    <div className="absolute inset-0 rounded-xl bg-gradient-to-tr from-ethiopia-emerald to-ethiopia-gold opacity-20"></div>
                   </div>
                   <div className="ml-3">
-                    <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow">
+                    <span className="text-2xl font-display font-bold gradient-text-ethiopia">
                       GrowNet
                     </span>
                   </div>
@@ -91,10 +93,9 @@ const Navbar: React.FC = () => {
                 <motion.div key={item.path} whileHover={{ y: -2 }}>
                   <Link
                     to={item.path}
-                    className="relative px-4 py-3 text-gray-700 dark:text-gray-300 hover:text-ethiopia-green dark:hover:text-ethiopia-yellow font-medium transition-all duration-300 group flex items-center"
+                    className="nav-link"
                   >
                     {item.name}
-                    <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-ethiopia-green to-ethiopia-yellow group-hover:w-full transition-all duration-300"></div>
                   </Link>
                 </motion.div>
               ))}

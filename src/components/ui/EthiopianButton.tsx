@@ -1,39 +1,34 @@
 import React from 'react';
-import { motion, MotionProps } from 'framer-motion';
+import { motion } from 'framer-motion';
 
-interface ButtonProps extends MotionProps {
+interface EthiopianButtonProps {
   children: React.ReactNode;
-  variant?: 'primary' | 'secondary' | 'accent' | 'ghost' | 'outline';
+  variant?: 'primary' | 'secondary' | 'accent' | 'ghost';
   size?: 'sm' | 'md' | 'lg' | 'xl';
-  className?: string;
   onClick?: () => void;
-  type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   loading?: boolean;
+  className?: string;
+  type?: 'button' | 'submit' | 'reset';
 }
 
-const Button: React.FC<ButtonProps> = ({
+const EthiopianButton: React.FC<EthiopianButtonProps> = ({
   children,
   variant = 'primary',
   size = 'md',
-  className = '',
   onClick,
-  type = 'button',
   disabled = false,
   loading = false,
-  whileHover,
-  whileTap,
-  ...props
+  className = '',
+  type = 'button',
 }) => {
-  // Base classes using design system
   const baseClasses = 'font-semibold rounded-xl transition-all duration-300 transform focus-ring inline-flex items-center justify-center gap-2';
   
   const variantClasses = {
     primary: 'btn-primary',
-    secondary: 'btn-secondary', 
+    secondary: 'btn-secondary',
     accent: 'btn-accent',
     ghost: 'btn-ghost',
-    outline: 'border border-ethiopia-emerald text-ethiopia-emerald hover:bg-ethiopia-emerald hover:text-white',
   };
   
   const sizeClasses = {
@@ -45,19 +40,15 @@ const Button: React.FC<ButtonProps> = ({
   
   const disabledClasses = disabled || loading ? 'opacity-50 cursor-not-allowed transform-none' : 'hover:-translate-y-0.5';
   
-  // Combine all classes
-  const combinedClasses = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${disabledClasses} ${className}`;
-  
   return (
     <motion.button
-      whileHover={!disabled && !loading ? (whileHover || { y: -2 }) : {}}
-      whileTap={!disabled && !loading ? (whileTap || { y: 0 }) : {}}
-      className={combinedClasses}
-      onClick={onClick}
       type={type}
+      onClick={onClick}
       disabled={disabled || loading}
+      className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${disabledClasses} ${className}`}
+      whileHover={!disabled && !loading ? { y: -2 } : {}}
+      whileTap={!disabled && !loading ? { y: 0 } : {}}
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
-      {...props}
     >
       {loading && (
         <div className="loading-coffee">
@@ -71,4 +62,4 @@ const Button: React.FC<ButtonProps> = ({
   );
 };
 
-export default Button;
+export default EthiopianButton;

@@ -19,13 +19,15 @@ import CourseDetail from './pages/CourseDetail';
 import News from './pages/News';
 import NewsDetail from './pages/NewsDetail';
 import CreateNews from './pages/CreateNews';
+import DesignShowcase from './pages/DesignShowcase';
+import PremiumShowcase from './pages/PremiumShowcase';
 
 function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
         <Router>
-          <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+          <div className="min-h-screen bg-cloud dark:bg-dark-charcoal transition-colors duration-200">
             <EnvironmentBanner />
             <Navbar />
             <main className="flex-1">
@@ -38,6 +40,8 @@ function App() {
                 <Route path="/news" element={<News />} />
                 <Route path="/news/:id" element={<NewsDetail />} />
                 <Route path="/courses/:id" element={<CourseDetail />} />
+                <Route path="/design-showcase" element={<DesignShowcase />} />
+                <Route path="/premium-showcase" element={<PremiumShowcase />} />
                 <Route path="/dashboard" element={
                   <ProtectedRoute>
                     <Dashboard />

@@ -1,0 +1,524 @@
+/* Ethiopian Learning Platform - Design System CSS */
+
+/* Import Premium Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+
+/* CSS Custom Properties for Theme System */
+:root {
+  /* Ethiopian Heritage Colors - Modernized */
+  --ethiopia-emerald: #00A651;
+  --ethiopia-gold: #F4B942;
+  --ethiopia-crimson: #E63946;
+  --ethiopia-sapphire: #2E86AB;
+  
+  /* Secondary Colors */
+  --terra-brown: #8B4513;
+  --honey-amber: #FFC947;
+  --sage-green: #87A96B;
+  --clay-orange: #D2691E;
+  
+  /* Modern Neutrals */
+  --charcoal: #2D3748;
+  --slate: #4A5568;
+  --ash: #718096;
+  --pearl: #E2E8F0;
+  --cloud: #F7FAFC;
+  --snow: #FFFFFF;
+  
+  /* Dark Mode */
+  --dark-charcoal: #1A202C;
+  --dark-slate: #2D3748;
+  --dark-ash: #4A5568;
+  
+  /* Semantic Colors */
+  --success: #38A169;
+  --warning: #D69E2E;
+  --error: #E53E3E;
+  --info: #3182CE;
+}
+
+/* Dark mode overrides */
+.dark {
+  --charcoal: #F7FAFC;
+  --slate: #E2E8F0;
+  --ash: #CBD5E0;
+  --pearl: #4A5568;
+  --cloud: #2D3748;
+  --snow: #1A202C;
+}
+
+/* Base Typography */
+.font-display {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 700;
+}
+
+.font-body {
+  font-family: 'Source Sans Pro', system-ui, sans-serif;
+}
+
+.font-accent {
+  font-family: 'Crimson Text', serif;
+}
+
+/* Button Components */
+.btn-primary {
+  @apply px-6 py-3 rounded-xl font-semibold text-white transition-all duration-300 transform;
+  background: linear-gradient(135deg, var(--ethiopia-emerald) 0%, var(--ethiopia-sapphire) 100%);
+  box-shadow: 0 4px 12px rgba(0, 166, 81, 0.3);
+}
+
+.btn-primary:hover {
+  @apply -translate-y-0.5;
+  box-shadow: 0 8px 20px rgba(0, 166, 81, 0.4);
+}
+
+.btn-primary:active {
+  @apply translate-y-0;
+  box-shadow: 0 4px 12px rgba(0, 166, 81, 0.3);
+}
+
+.btn-secondary {
+  @apply px-6 py-3 rounded-xl font-semibold border-2 transition-all duration-300 transform;
+  background: transparent;
+  color: var(--ethiopia-emerald);
+  border-color: var(--ethiopia-emerald);
+}
+
+.btn-secondary:hover {
+  @apply -translate-y-0.5 text-white;
+  background: var(--ethiopia-emerald);
+}
+
+.btn-accent {
+  @apply px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform;
+  background: linear-gradient(135deg, var(--ethiopia-gold) 0%, var(--honey-amber) 100%);
+  color: var(--charcoal);
+}
+
+.btn-accent:hover {
+  @apply -translate-y-0.5;
+  box-shadow: 0 8px 20px rgba(244, 185, 66, 0.4);
+}
+
+.btn-ghost {
+  @apply px-6 py-3 rounded-xl font-medium text-slate hover:text-ethiopia-emerald hover:bg-ethiopia-emerald hover:bg-opacity-10 transition-all duration-300;
+}
+
+/* Card Components */
+.card {
+  @apply bg-white rounded-2xl p-6 shadow-soft border border-pearl transition-all duration-300 transform;
+}
+
+.card:hover {
+  @apply -translate-y-1 shadow-medium;
+}
+
+.card-feature {
+  @apply rounded-3xl p-8 relative overflow-hidden;
+  background: linear-gradient(135deg, white 0%, #f8fafc 100%);
+}
+
+.card-feature::before {
+  content: '';
+  @apply absolute inset-0 rounded-3xl;
+  padding: 2px;
+  background: linear-gradient(135deg, var(--ethiopia-emerald), var(--ethiopia-gold));
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+}
+
+.card-course {
+  @apply bg-white rounded-2xl overflow-hidden shadow-medium transition-all duration-300 transform;
+}
+
+.card-course:hover {
+  @apply -translate-y-1.5 scale-105;
+  box-shadow: 0 20px 40px rgba(0, 166, 81, 0.15);
+}
+
+.card-tutor {
+  @apply relative h-80;
+  perspective: 1000px;
+}
+
+.card-tutor-inner {
+  @apply relative w-full h-full text-center transition-transform duration-700;
+  transform-style: preserve-3d;
+}
+
+.card-tutor:hover .card-tutor-inner {
+  transform: rotateY(180deg);
+}
+
+.card-tutor-front,
+.card-tutor-back {
+  @apply absolute w-full h-full rounded-2xl p-6;
+  backface-visibility: hidden;
+}
+
+.card-tutor-back {
+  @apply text-white;
+  background: linear-gradient(135deg, var(--ethiopia-emerald), var(--ethiopia-sapphire));
+  transform: rotateY(180deg);
+}
+
+/* Form Components */
+.input {
+  @apply w-full px-4 py-3.5 border-2 border-pearl rounded-xl text-base transition-all duration-300 bg-white;
+}
+
+.input:focus {
+  @apply outline-none border-ethiopia-emerald;
+  box-shadow: 0 0 0 3px rgba(0, 166, 81, 0.1);
+}
+
+.input:disabled {
+  @apply bg-gray-50 text-gray-400 cursor-not-allowed;
+}
+
+.select {
+  @apply appearance-none bg-white;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+}
+
+.textarea {
+  @apply resize-none min-h-24;
+}
+
+/* Navigation Components */
+.navbar {
+  @apply transition-all duration-300;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.nav-link {
+  @apply text-slate font-medium px-4 py-2 rounded-lg transition-all duration-300 relative;
+}
+
+.nav-link:hover {
+  @apply text-ethiopia-emerald;
+  background: rgba(0, 166, 81, 0.1);
+}
+
+.nav-link.active::after {
+  content: '';
+  @apply absolute -bottom-px left-1/2 transform -translate-x-1/2 w-4/5 h-0.5 rounded-sm;
+  background: linear-gradient(90deg, var(--ethiopia-emerald), var(--ethiopia-gold));
+}
+
+.mobile-nav {
+  @apply fixed bottom-0 left-0 right-0 bg-white border-t border-pearl p-4 flex justify-around z-fixed;
+}
+
+@media (min-width: 768px) {
+  .mobile-nav {
+    @apply hidden;
+  }
+}
+
+/* Icon Components */
+.icon-container {
+  @apply w-12 h-12 rounded-xl flex items-center justify-center text-white mb-4;
+  background: linear-gradient(135deg, var(--ethiopia-emerald) 0%, var(--ethiopia-sapphire) 100%);
+}
+
+.icon-container.secondary {
+  @apply text-charcoal;
+  background: linear-gradient(135deg, var(--ethiopia-gold) 0%, var(--honey-amber) 100%);
+}
+
+.icon-container.tertiary {
+  @apply text-white;
+  background: linear-gradient(135deg, var(--ethiopia-crimson) 0%, var(--clay-orange) 100%);
+}
+
+/* Progress Components */
+.progress-bar {
+  @apply w-full h-2 bg-pearl rounded-sm overflow-hidden;
+}
+
+.progress-fill {
+  @apply h-full rounded-sm transition-all duration-700 ease-out;
+  background: linear-gradient(90deg, var(--ethiopia-emerald) 0%, var(--ethiopia-gold) 100%);
+}
+
+.progress-circle {
+  @apply relative inline-flex items-center justify-center;
+}
+
+.progress-circle svg {
+  @apply transform -rotate-90;
+}
+
+.progress-circle-bg {
+  @apply text-pearl;
+}
+
+.progress-circle-fill {
+  @apply transition-all duration-700 ease-out;
+  stroke: url(#ethiopiaGradient);
+}
+
+/* Skill Tree Components */
+.skill-tree {
+  @apply relative p-8;
+}
+
+.skill-node {
+  @apply w-16 h-16 rounded-full flex items-center justify-center text-white cursor-pointer transition-all duration-300 relative;
+  background: linear-gradient(135deg, var(--ethiopia-emerald), var(--ethiopia-sapphire));
+}
+
+.skill-node:hover {
+  @apply scale-125;
+  box-shadow: 0 8px 24px rgba(0, 166, 81, 0.4);
+}
+
+.skill-node.completed::after {
+  content: '✓';
+  @apply absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-xs text-charcoal;
+  background: var(--ethiopia-gold);
+}
+
+.skill-connection {
+  @apply absolute h-0.5 top-1/2 transform -translate-y-1/2;
+  background: linear-gradient(90deg, var(--ethiopia-emerald), var(--ethiopia-gold));
+}
+
+/* Loading Components */
+.loading-coffee {
+  @apply flex gap-2 justify-center items-center;
+}
+
+.coffee-bean {
+  @apply w-3 h-3 rounded-full;
+  background: var(--terra-brown);
+  animation: coffee-bounce 1.4s ease-in-out infinite;
+}
+
+.coffee-bean:nth-child(1) { animation-delay: -0.32s; }
+.coffee-bean:nth-child(2) { animation-delay: -0.16s; }
+.coffee-bean:nth-child(3) { animation-delay: 0s; }
+
+.loading-pulse {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Pattern Backgrounds */
+.bg-pattern-habesha {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(0, 166, 81, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(244, 185, 66, 0.1) 0%, transparent 50%);
+  background-size: 60px 60px;
+}
+
+.bg-pattern-cross {
+  background-image: 
+    linear-gradient(45deg, transparent 40%, rgba(0, 166, 81, 0.05) 40%, rgba(0, 166, 81, 0.05) 60%, transparent 60%),
+    linear-gradient(-45deg, transparent 40%, rgba(244, 185, 66, 0.05) 40%, rgba(244, 185, 66, 0.05) 60%, transparent 60%);
+  background-size: 20px 20px;
+}
+
+/* Gradient Utilities */
+.gradient-ethiopia {
+  background: linear-gradient(135deg, var(--ethiopia-emerald) 0%, var(--ethiopia-sapphire) 100%);
+}
+
+.gradient-gold {
+  background: linear-gradient(135deg, var(--ethiopia-gold) 0%, var(--honey-amber) 100%);
+}
+
+.gradient-crimson {
+  background: linear-gradient(135deg, var(--ethiopia-crimson) 0%, var(--clay-orange) 100%);
+}
+
+.gradient-text-ethiopia {
+  background: linear-gradient(135deg, var(--ethiopia-emerald) 0%, var(--ethiopia-sapphire) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-gold {
+  background: linear-gradient(135deg, var(--ethiopia-gold) 0%, var(--honey-amber) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animation Utilities */
+.hover-bounce:hover {
+  animation: gentle-bounce 0.6s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slide-in-up 0.6s ease-out;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Accessibility Enhancements */
+.focus-ring:focus {
+  @apply outline-none;
+  box-shadow: 0 0 0 3px rgba(0, 166, 81, 0.3);
+}
+
+.focus-ring-gold:focus {
+  @apply outline-none;
+  box-shadow: 0 0 0 3px rgba(244, 185, 66, 0.3);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .btn-primary {
+    border: 2px solid var(--ethiopia-emerald);
+  }
+  
+  .btn-secondary {
+    background: white;
+  }
+  
+  .card {
+    border: 2px solid var(--pearl);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  .btn-primary,
+  .btn-secondary,
+  .btn-accent {
+    @apply border border-gray-400 bg-white text-black;
+  }
+  
+  .card {
+    @apply border border-gray-300 shadow-none;
+  }
+}
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--pearl);
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--ethiopia-emerald), var(--ethiopia-gold));
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--ethiopia-sapphire), var(--ethiopia-emerald));
+}
+
+/* Tooltip Component */
+.tooltip {
+  @apply absolute z-tooltip px-3 py-2 text-sm text-white rounded-lg shadow-lg;
+  background: var(--charcoal);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.tooltip::after {
+  content: '';
+  @apply absolute w-2 h-2 transform rotate-45;
+  background: var(--charcoal);
+}
+
+.tooltip.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Badge Component */
+.badge {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.badge-success {
+  @apply text-green-800 bg-green-100;
+}
+
+.badge-warning {
+  @apply text-yellow-800 bg-yellow-100;
+}
+
+.badge-error {
+  @apply text-red-800 bg-red-100;
+}
+
+.badge-ethiopia {
+  @apply text-white;
+  background: linear-gradient(135deg, var(--ethiopia-emerald), var(--ethiopia-sapphire));
+}
+
+/* Modal Component */
+.modal-backdrop {
+  @apply fixed inset-0 z-modal-backdrop;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.modal {
+  @apply fixed inset-0 z-modal flex items-center justify-center p-4;
+}
+
+.modal-content {
+  @apply bg-white rounded-2xl shadow-strong max-w-lg w-full max-h-screen overflow-y-auto;
+}
+
+/* Responsive Design Utilities */
+.container-responsive {
+  @apply w-full mx-auto px-4;
+}
+
+@media (min-width: 640px) {
+  .container-responsive {
+    @apply max-w-screen-sm px-6;
+  }
+}
+
+@media (min-width: 768px) {
+  .container-responsive {
+    @apply max-w-screen-md px-8;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-responsive {
+    @apply max-w-screen-lg px-12;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-responsive {
+    @apply max-w-screen-xl px-16;
+  }
+}
